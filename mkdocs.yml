@@ -1,0 +1,23 @@
+site_name: Tyler's TACC Research
+theme:
+  name: readthedocs
+
+nav:
+  - Home: index.md
+  - Research Log: log/index.md
+  - Projects:
+      - TMS:
+          - Overview: projects/tms/index.md
+          - Meetings:
+              - Meeting 2: projects/tms/meetings/meeting-2.md
+  - How-To: howto/index.md
+  - About: about.md
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - tables
+  - footnotes
+  - codehilite
+
