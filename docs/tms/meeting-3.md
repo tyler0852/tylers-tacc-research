@@ -30,7 +30,7 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s \
   "result_msg": "success"
 }
 ```
-- Created a client called **testclient1**
+- Created a client called `testclient1`
 ```bash
 tyler@Tylers-MacBook-Pro tms_server % curl -s -X POST "http://localhost:3000/v1/tms/pubkeys/creds" \
   -H "X-TMS-TENANT: test" \
