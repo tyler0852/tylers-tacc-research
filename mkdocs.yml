@@ -3,11 +3,8 @@ theme:
   name: readthedocs
 
 nav:
-  - Projects:
-      - TMS:
-          - Overview: projects/tms/index.md
-          - Meetings:
-              - Meeting 2: projects/tms/meetings/meeting-2.md
+  - TMS:
+      - Meetings: TMS/meetings.md
 
 markdown_extensions:
   - admonition
