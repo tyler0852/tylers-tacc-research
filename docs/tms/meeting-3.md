@@ -14,12 +14,39 @@
     4. List pubkeys
     5. Delete the pubkey
     6. Delete the client
+ 
+Step 1: Create a client
+
 ```bash
-tyler@Tylers-MacBook-Pro tms_server % curl -s \
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X POST "http://localhost:3000/v1/tms/client" \
   -H "X-TMS-TENANT: test" \
-  -H "X-TMS-ADMIN-ID: $TMS_USER" \
+  -H "X-TMS-ADMIN-ID: ~~admin" \
   -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
-  "http://localhost:3000/v1/tms/client/list" | jq
+  -H "Content-Type: application/json" \
+  -H "accept: application/json; charset=utf-8" \
+  -d '{
+    "client_id": "testclient1",
+    "tenant": "test",
+    "app_name": "testapp1",
+    "app_version": "1.0"
+  }' | jq
+
+{
+  "client_id": "testclient1",
+  "client_secret": "dc870931171135b82a8235ad328b6e326c5bf4826f34ffd3",
+  "result_code": "0",
+  "result_msg": "success"
+}
+```
+
+Step 2: List Clients
+
+```bash
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/tms/client/list" \
+  -H "X-TMS-TENANT: test" \
+  -H "X-TMS-ADMIN-ID: ~~admin" \
+  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
+  -H "accept: application/json; charset=utf-8" | jq
 
 {
   "clients": [
@@ -27,11 +54,11 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s \
       "app_name": "testapp1",
       "app_version": "1.0",
       "client_id": "testclient1",
-      "created": "2025-09-17T16:57:08Z",
+      "created": "2025-09-17T19:36:54.008386Z",
       "enabled": 1,
       "id": 1,
       "tenant": "test",
-      "updated": "2025-09-17T16:57:08Z"
+      "updated": "2025-09-17T19:36:54.008386Z"
     }
   ],
   "num_clients": 1,
@@ -39,12 +66,15 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s \
   "result_msg": "success"
 }
 ```
-- Created a client called `testclient1`
+
+Step 3: Create a pubkey
+- I first exported the client id and secret
+
 ```bash
 tyler@Tylers-MacBook-Pro tms_server % curl -s -X POST "http://localhost:3000/v1/tms/pubkeys/creds" \
   -H "X-TMS-TENANT: test" \
-  -H "X-TMS-CLIENT-ID: testclient1" \
-  -H "X-TMS-CLIENT-SECRET: secret1" \
+  -H "X-TMS-CLIENT-ID: $X_TMS_CLIENT_ID" \
+  -H "X-TMS-CLIENT-SECRET: $X_TMS_CLIENT_SECRET" \
   -H "Content-Type: application/json" \
   -d '{
     "client_user_id": "testuser1",
@@ -56,34 +86,36 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X POST "http://localhost:3000/v1/
   }' | jq
 
 {
-  "expires_at": "2025-09-17T17:59:10Z",
+  "expires_at": "2025-09-17T19:49:29Z",
   "key_bits": "256",
   "key_type": "ed25519",
   "max_uses": "0",
-  "private_key": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\nQyNTUxOQAAACD/z7UZGk2Sdd3lVneinNtUEjGewGi+GlH8eXzj+ftEDAAAAIh0cKYcdHCm\nHAAAAAtzc2gtZWQyNTUxOQAAACD/z7UZGk2Sdd3lVneinNtUEjGewGi+GlH8eXzj+ftEDA\nAAAECyvvzZmK9J2wmQCA47RHbz1HlBy9tTcwG8PUxdSGZ/w//PtRkaTZJ13eVWd6Kc21QS\nMZ7AaL4aUfx5fOP5+0QMAAAAAAECAwQF\n-----END OPENSSH PRIVATE KEY-----\n",
-  "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/PtRkaTZJ13eVWd6Kc21QSMZ7AaL4aUfx5fOP5+0QM",
-  "public_key_fingerprint": "SHA256:gpz/kvTVb6mY164lDDyuOCZeKSI3ojrik2TIAN55Qv0",
+  "private_key": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\nQyNTUxOQAAACDvrYFigPHQv9qjDn6e2auJWhlv7RACu/pARalSNJHRjAAAAIiWGvPolhrz\n6AAAAAtzc2gtZWQyNTUxOQAAACDvrYFigPHQv9qjDn6e2auJWhlv7RACu/pARalSNJHRjA\nAAAECQZpdJY2CWjumG2l+m47SU5kegIapuiWE5clxBJtlKl++tgWKA8dC/2qMOfp7Zq4la\nGW/tEAK7+kBFqVI0kdGMAAAAAAECAwQF\n-----END OPENSSH PRIVATE KEY-----\n",
+  "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+tgWKA8dC/2qMOfp7Zq4laGW/tEAK7+kBFqVI0kdGM",
+  "public_key_fingerprint": "SHA256:V2Kz/rjouXPc9Q9av67SLoeTIpo/W/9KcaPMnTVTLaw",
   "remaining_uses": "0",
   "result_code": "0",
   "result_msg": "success"
 }
 ```
-- List the keys to verify creation
+
+Step 4: List the pubkey
+
 ```bash
 tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/tms/pubkeys/list" \
   -H "X-TMS-TENANT: test" \
-  -H "X-TMS-CLIENT-ID: testclient1" \
-  -H "X-TMS-CLIENT-SECRET: secret1" \
+  -H "X-TMS-CLIENT-ID: $X_TMS_CLIENT_ID" \
+  -H "X-TMS-CLIENT-SECRET: $X_TMS_CLIENT_SECRET" \
   -H "accept: application/json; charset=utf-8" | jq
 
 {
-  "num_pubkeys": 2,
+  "num_pubkeys": 1,
   "pubkeys": [
     {
       "client_id": "testclient1",
       "client_user_id": "testuser1",
-      "created": "2025-09-17T17:55:28.246562Z",
-      "expires_at": "2025-09-17T17:55:28Z",
+      "created": "2025-09-17T19:49:29.327761Z",
+      "expires_at": "2025-09-17T19:49:29Z",
       "host": "testhost1",
       "host_account": "testhostaccount1",
       "id": 1,
@@ -91,56 +123,61 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/t
       "key_bits": 256,
       "key_type": "ed25519",
       "max_uses": 0,
-      "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRaNZpO4UL0RO7nc7bx5SSrbFC0rRmHFQgRm+3avTeg",
-      "public_key_fingerprint": "SHA256:/4M9b09o0WVRryMWMi4eds3ex9EZmRvfWE7iPYGUsLw",
+      "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+tgWKA8dC/2qMOfp7Zq4laGW/tEAK7+kBFqVI0kdGM",
+      "public_key_fingerprint": "SHA256:V2Kz/rjouXPc9Q9av67SLoeTIpo/W/9KcaPMnTVTLaw",
       "remaining_uses": 0,
       "tenant": "test",
-      "updated": "2025-09-17T17:55:28.246562Z"
-    },
-    {
-      "client_id": "testclient1",
-      "client_user_id": "testuser1",
-      "created": "2025-09-17T17:59:10.973027Z",
-      "expires_at": "2025-09-17T17:59:10Z",
-      "host": "testhost1",
-      "host_account": "testhostaccount1",
-      "id": 2,
-      "initial_ttl_minutes": 0,
-      "key_bits": 256,
-      "key_type": "ed25519",
-      "max_uses": 0,
-      "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/PtRkaTZJ13eVWd6Kc21QSMZ7AaL4aUfx5fOP5+0QM",
-      "public_key_fingerprint": "SHA256:gpz/kvTVb6mY164lDDyuOCZeKSI3ojrik2TIAN55Qv0",
-      "remaining_uses": 0,
-      "tenant": "test",
-      "updated": "2025-09-17T17:59:10.973027Z"
+      "updated": "2025-09-17T19:49:29.327761Z"
     }
   ],
   "result_code": "0",
   "result_msg": "success"
 }
 ```
-- What I did last time I'm realizing was try to delete the pubkey using the client route
+
+Step 5: Delete the pubkey
 ```bash
-tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v1/tms/client/del/2" \
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v1/tms/pubkeys/del" \
   -H "X-TMS-TENANT: test" \
-  -H "X-TMS-ADMIN-ID: ~~admin" \
-  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
-  -H "accept: application/json; charset=utf-8" | jq
+  -H "X-TMS-CLIENT-ID: $X_TMS_CLIENT_ID" \
+  -H "X-TMS-CLIENT-SECRET: $X_TMS_CLIENT_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "client_id": "testclient1",
+    "tenant": "test",
+    "host": "testhost1",
+    "public_key_fingerprint": "SHA256:V2Kz/rjouXPc9Q9av67SLoeTIpo/W/9KcaPMnTVTLaw"
+  }' | jq
 
 {
-  "num_deleted": 0,
+  "num_deleted": 1,
   "result_code": "0",
-  "result_msg": "Client 2 NOT FOUND - Nothing deleted"
+  "result_msg": "Pubkey SHA256:V2Kz/rjouXPc9Q9av67SLoeTIpo/W/9KcaPMnTVTLaw for host testhost1 deleted"
 }
 ```
-- If I did want to delete the client I would do this
-    - Notice that the id is `testclient1` and not `1`
+Step 5.5: Check to make sure it was deleted
+
+```bash
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/tms/pubkeys/list" \
+  -H "X-TMS-TENANT: test" \
+  -H "X-TMS-CLIENT-ID: $X_TMS_CLIENT_ID" \
+  -H "X-TMS-CLIENT-SECRET: $X_TMS_CLIENT_SECRET" \
+  -H "accept: application/json; charset=utf-8" | jq
+{
+  "num_pubkeys": 0,
+  "pubkeys": [],
+  "result_code": "0",
+  "result_msg": "success"
+}
+```
+
+Step 6: Delete the client
+
 ```bash
 tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v1/tms/client/del/testclient1" \
   -H "X-TMS-TENANT: test" \
-  -H "X-TMS-ADMIN-ID: ~~admin" \
-  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
+  -H "X-TMS-ADMIN-ID: $TMS_ADMIN_ID" \
+  -H "X-TMS-ADMIN-SECRET: $TMS_ADMIN_SECRET" \
   -H "accept: application/json; charset=utf-8" | jq
 
 {
@@ -148,10 +185,14 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v
   "result_code": "0",
   "result_msg": "Client testclient1 deleted"
 }
+```
+
+Step 6.5: Check that the client is deleted
+```bash
 tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/tms/client/list" \
   -H "X-TMS-TENANT: test" \
-  -H "X-TMS-ADMIN-ID: ~~admin" \
-  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
+  -H "X-TMS-ADMIN-ID: $TMS_ADMIN_ID" \
+  -H "X-TMS-ADMIN-SECRET: $TMS_ADMIN_SECRET" \
   -H "accept: application/json; charset=utf-8" | jq
 
 {
@@ -162,9 +203,11 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/t
 }
 ```
 
-
 ## Road Blockers and Questions
 
-- For awhile I thought pubkeys were clients
+- I didn't really run into anything I couldn't figure, just took me awhile...
 
 ## Whats Next
+
+- Learn about certificates
+- Run more load test, get TLS back in the picture
