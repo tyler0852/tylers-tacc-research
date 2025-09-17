@@ -125,8 +125,20 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v
   "result_msg": "Client 2 NOT FOUND - Nothing deleted"
 }
 ```
-- That does make me wonder why this didn't work
+- If I did want to delete the client I would do this
+    - Notice that the id is `testclient1` and not `1`
 ```bash
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v1/tms/client/del/testclient1" \
+  -H "X-TMS-TENANT: test" \
+  -H "X-TMS-ADMIN-ID: ~~admin" \
+  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
+  -H "accept: application/json; charset=utf-8" | jq
+
+{
+  "num_deleted": 1,
+  "result_code": "0",
+  "result_msg": "Client testclient1 deleted"
+}
 tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/tms/client/list" \
   -H "X-TMS-TENANT: test" \
   -H "X-TMS-ADMIN-ID: ~~admin" \
@@ -134,32 +146,10 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/t
   -H "accept: application/json; charset=utf-8" | jq
 
 {
-  "clients": [
-    {
-      "app_name": "testapp1",
-      "app_version": "1.0",
-      "client_id": "testclient1",
-      "created": "2025-09-17T16:57:08Z",
-      "enabled": 1,
-      "id": 1,
-      "tenant": "test",
-      "updated": "2025-09-17T16:57:08Z"
-    }
-  ],
-  "num_clients": 1,
+  "clients": [],
+  "num_clients": 0,
   "result_code": "0",
   "result_msg": "success"
-}
-tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v1/tms/client/del/1" \
-  -H "X-TMS-TENANT: test" \
-  -H "X-TMS-ADMIN-ID: ~~admin" \
-  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
-  -H "accept: application/json; charset=utf-8" | jq
-
-{
-  "num_deleted": 0,
-  "result_code": "0",
-  "result_msg": "Client 1 NOT FOUND - Nothing deleted"
 }
 ```
 
