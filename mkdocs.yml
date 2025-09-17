@@ -1,10 +1,13 @@
 site_name: Tyler's TACC Research
+docs_dir: docs
 theme:
   name: readthedocs
 
 nav:
   - TMS:
-      - Meetings: TMS/meetings.md
+      - Meeting 1: projects/tms/meetings/meeting-1.md
+      - Meeting 2: projects/tms/meetings/meeting-2.md
+      # add more meetings here in order
 
 markdown_extensions:
   - admonition
