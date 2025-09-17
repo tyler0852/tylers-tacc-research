@@ -59,6 +59,58 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X POST "http://localhost:3000/v1/
   "result_msg": "success"
 }
 ```
+- List the keys to verify creation
+```bash
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/tms/pubkeys/list" \
+  -H "X-TMS-TENANT: test" \
+  -H "X-TMS-CLIENT-ID: testclient1" \
+  -H "X-TMS-CLIENT-SECRET: secret1" \
+  -H "accept: application/json; charset=utf-8" | jq
+
+{
+  "num_pubkeys": 2,
+  "pubkeys": [
+    {
+      "client_id": "testclient1",
+      "client_user_id": "testuser1",
+      "created": "2025-09-17T17:55:28.246562Z",
+      "expires_at": "2025-09-17T17:55:28Z",
+      "host": "testhost1",
+      "host_account": "testhostaccount1",
+      "id": 1,
+      "initial_ttl_minutes": 0,
+      "key_bits": 256,
+      "key_type": "ed25519",
+      "max_uses": 0,
+      "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRaNZpO4UL0RO7nc7bx5SSrbFC0rRmHFQgRm+3avTeg",
+      "public_key_fingerprint": "SHA256:/4M9b09o0WVRryMWMi4eds3ex9EZmRvfWE7iPYGUsLw",
+      "remaining_uses": 0,
+      "tenant": "test",
+      "updated": "2025-09-17T17:55:28.246562Z"
+    },
+    {
+      "client_id": "testclient1",
+      "client_user_id": "testuser1",
+      "created": "2025-09-17T17:59:10.973027Z",
+      "expires_at": "2025-09-17T17:59:10Z",
+      "host": "testhost1",
+      "host_account": "testhostaccount1",
+      "id": 2,
+      "initial_ttl_minutes": 0,
+      "key_bits": 256,
+      "key_type": "ed25519",
+      "max_uses": 0,
+      "public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP/PtRkaTZJ13eVWd6Kc21QSMZ7AaL4aUfx5fOP5+0QM",
+      "public_key_fingerprint": "SHA256:gpz/kvTVb6mY164lDDyuOCZeKSI3ojrik2TIAN55Qv0",
+      "remaining_uses": 0,
+      "tenant": "test",
+      "updated": "2025-09-17T17:59:10.973027Z"
+    }
+  ],
+  "result_code": "0",
+  "result_msg": "success"
+}
+```
 
 
 ## Road Blockers
