@@ -2,7 +2,7 @@
 
 ## What Got Done
 
-- I kept running into an issue where it would take me a long time to figure something out and then when I did figure it out, I wouldn't document how I did it well. This will be a way to share my meeting notes and have included code snippets and documentation for myself.
+- I kept running into an issue where it would take me a long time to figure something out and then when I did figure it out, I wouldn't document how I did it well. This readthedocs will server the purpose of sharing my notes, allowing code snippets in the notes, and documentation for myself.
 
 - I will create another section on this later to refer to but for now still showing the process here. After I started the server, made sure I stored the Administrator ID and Password, I listed the clients
 ```bash
