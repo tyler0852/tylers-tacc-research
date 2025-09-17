@@ -4,7 +4,16 @@
 
 - I kept running into an issue where it would take me a long time to figure something out and then when I did figure it out, I wouldn't document how I did it well. This readthedocs will server the purpose of sharing my notes, allowing code snippets in the notes, and documentation for myself.
 
-- I will create another section on this later to refer to but for now still showing the process here. After I started the server, made sure I stored the Administrator ID and Password, I listed the clients
+- Went on a rather long expedition documenting the process of client and public key creation, how to list them, and how to delete them.
+- Up until this week I was trying to treat them as the same thing and kept getting them confused.
+- A client will have many pubkeys associtated with it. If you delete the client, all pubkeys associated with the client are also deleted.
+- After a lot of playing around with it, I wanted to layout a 6-step process
+  1. Create a client: Registers an app in the tenant with `client_id` and `client_secret`
+  2. List clients
+  3. Create a pubkey: Using `client_id` and `client_secret`
+  4. List pubkeys
+  5. Delete the pubkey
+  6. Delete the client
 ```bash
 tyler@Tylers-MacBook-Pro tms_server % curl -s \
   -H "X-TMS-TENANT: test" \
@@ -154,6 +163,8 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/t
 ```
 
 
-## Road Blockers
+## Road Blockers and Questions
+
+- For awhile I thought pubkeys were clients
 
 ## Whats Next
