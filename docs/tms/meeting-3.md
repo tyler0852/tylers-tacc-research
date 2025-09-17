@@ -4,7 +4,7 @@
 
 - I kept running into an issue where it would take me a long time to figure something out and then when I did figure it out, I wouldn't document how I did it well. This will be a way to share my meeting notes and have included code snippets and documentation for myself.
 
-- I will create another section on this later to refer to but for now still showing the process. After I started the server, made sure I stored the Administrator ID and Password, I listed the clients
+- I will create another section on this later to refer to but for now still showing the process here. After I started the server, made sure I stored the Administrator ID and Password, I listed the clients
 ```bash
 tyler@Tylers-MacBook-Pro tms_server % curl -s \
   -H "X-TMS-TENANT: test" \
@@ -109,6 +109,57 @@ tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/t
   ],
   "result_code": "0",
   "result_msg": "success"
+}
+```
+- What I did last time I'm realizing was try to delete the pubkey using the client route
+```bash
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v1/tms/client/del/2" \
+  -H "X-TMS-TENANT: test" \
+  -H "X-TMS-ADMIN-ID: ~~admin" \
+  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
+  -H "accept: application/json; charset=utf-8" | jq
+
+{
+  "num_deleted": 0,
+  "result_code": "0",
+  "result_msg": "Client 2 NOT FOUND - Nothing deleted"
+}
+```
+- That does make me wonder why this didn't work
+```bash
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X GET "http://localhost:3000/v1/tms/client/list" \
+  -H "X-TMS-TENANT: test" \
+  -H "X-TMS-ADMIN-ID: ~~admin" \
+  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
+  -H "accept: application/json; charset=utf-8" | jq
+
+{
+  "clients": [
+    {
+      "app_name": "testapp1",
+      "app_version": "1.0",
+      "client_id": "testclient1",
+      "created": "2025-09-17T16:57:08Z",
+      "enabled": 1,
+      "id": 1,
+      "tenant": "test",
+      "updated": "2025-09-17T16:57:08Z"
+    }
+  ],
+  "num_clients": 1,
+  "result_code": "0",
+  "result_msg": "success"
+}
+tyler@Tylers-MacBook-Pro tms_server % curl -s -X DELETE "http://localhost:3000/v1/tms/client/del/1" \
+  -H "X-TMS-TENANT: test" \
+  -H "X-TMS-ADMIN-ID: ~~admin" \
+  -H "X-TMS-ADMIN-SECRET: $TMS_PASS" \
+  -H "accept: application/json; charset=utf-8" | jq
+
+{
+  "num_deleted": 0,
+  "result_code": "0",
+  "result_msg": "Client 1 NOT FOUND - Nothing deleted"
 }
 ```
 
