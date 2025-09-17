@@ -5,40 +5,40 @@
 - Identified core problem: **cross-site automation is hard**  
   (MFA, key distribution, multi-institution identities).
 - Clarified TMS goals:
-  - Delegated command execution
-  - Account linking
-  - Sandbox/deploy tools
-  - Modular Rust design
+    - Delegated command execution
+    - Account linking
+    - Sandbox/deploy tools
+    - Modular Rust design
 - Current authentication methods:
-  - One-time SSH keys
-  - Short-lived tokens (PAM)
-  - HTTPS host agent
-  - TOTP for MFA
+    - One-time SSH keys
+    - Short-lived tokens (PAM)
+    - HTTPS host agent
+    - TOTP for MFA
 - Planned authentication improvements:
-  - WebAuthn/FIDO2
-  - Standards-based tokens (SciTokens/WLCG/EGI)
+    - WebAuthn/FIDO2
+    - Standards-based tokens (SciTokens/WLCG/EGI)
 - Team & operations:
-  - UT Austin lead with UH, SDSC, OSC, Globus, etc.
-  - Agile workflow + CI/CD
+    - UT Austin lead with UH, SDSC, OSC, Globus, etc.
+    - Agile workflow + CI/CD
 - Outreach:
-  - Workshops, hackathons, training
+    - Workshops, hackathons, training
 - Roadmap:
-  - Prototype → Tokens/PAM → WebAuthn → Sandbox
-  - Sustain via OSS, audits, production deployments
+    - Prototype → Tokens/PAM → WebAuthn → Sandbox
+    - Sustain via OSS, audits, production deployments
 - Risks & review:
-  - Novelty, missing threat model, single points of failure, adoption plan, broader impacts
-  - Mitigation: tighten scope, explicit threat/innovation framing
+    - Novelty, missing threat model, single points of failure, adoption plan, broader impacts
+    - Mitigation: tighten scope, explicit threat/innovation framing
 - Ran `tms_server` again.
 - Learned there are **two config files**:
-  - `~/.tms` overrides the config inside `tms_server`.
+    - `~/.tms` overrides the config inside `tms_server`.
 - Modified config:
-  - Enabled the test tenant
-  - Changed `http_addr` to drop the secure part
-  - This allowed creating and listing new keys (creds).
+    - Enabled the test tenant
+    - Changed `http_addr` to drop the secure part
+    - This allowed creating and listing new keys (creds).
 - Got `tms_loadtest` working once MVP was enabled.
 - Continued building `tms_min`:
-  - Slowed down to better understand each line of code.
-  - Switched to **Poem** framework to match `tms_server`.
+    - Slowed down to better understand each line of code.
+    - Switched to **Poem** framework to match `tms_server`.
 
 ## Road Blockers
 - In `tms_server`, able to **create and list** keys but not able to **delete** them.
