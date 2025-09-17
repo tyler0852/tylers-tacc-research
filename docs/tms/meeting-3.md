@@ -8,12 +8,12 @@
 - Up until this week I was trying to treat them as the same thing and kept getting them confused.
 - A client will have many pubkeys associtated with it. If you delete the client, all pubkeys associated with the client are also deleted.
 - After a lot of playing around with it, I wanted to layout a 6-step process
-  1. Create a client: Registers an app in the tenant with `client_id` and `client_secret`
-  2. List clients
-  3. Create a pubkey: Using `client_id` and `client_secret`
-  4. List pubkeys
-  5. Delete the pubkey
-  6. Delete the client
+    1. Create a client: Registers an app in the tenant with `client_id` and `client_secret`
+    2. List clients
+    3. Create a pubkey: Using `client_id` and `client_secret`
+    4. List pubkeys
+    5. Delete the pubkey
+    6. Delete the client
 ```bash
 tyler@Tylers-MacBook-Pro tms_server % curl -s \
   -H "X-TMS-TENANT: test" \
