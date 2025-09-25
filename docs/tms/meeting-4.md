@@ -50,6 +50,13 @@ $$s = B^a \pmod p$$
 
 $$s = A^b \pmod p$$
 
+- Use Cases
+    - TLS
+    - SSH
+    - VPNs
+    - Messaging apps
+    - The frequency in which a Diffie-Hellman occurs will change on the use case. For things like TLS and SSH, it will most likely do a Diffie-Hellman everytime you make a connection. For something like messaging apps, it will be used repeatedly, could be every message, could be longer until it is invoked again.
+
 
 
        
