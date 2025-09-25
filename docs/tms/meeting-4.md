@@ -18,6 +18,15 @@
     - p: A large prime number
     - g: A number less than p, often reffered to as the generator
     - s: The secret that person 1 and person 2 will share after doing Diffie-Hellman
+- Public, not secret variables:
+    - A
+    - B
+    - p
+    - g
+- Private, secret variables:
+    - a
+    - b
+    - s
 - Conditions
     - p:
         - Must be a large prime number
@@ -40,6 +49,7 @@ $$B = g^b \pmod p$$
 $$s = B^a \pmod p$$
 
 $$s = A^b \pmod p$$
+
 
 
        
