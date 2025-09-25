@@ -32,11 +32,11 @@
     - A&B:
         - Always between 1 and p-1
 - Variable Definitions:
-$$
-A = g^a \pmod p \\
-B = g^b \pmod p \\
+```{math}
+A = g^a \pmod p
+B = g^b \pmod p
 s = g^{ab} \pmod p
-$$
+```
        
 
 ## Road Blockers and Questions
