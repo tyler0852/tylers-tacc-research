@@ -32,10 +32,15 @@
     - A&B:
         - Always between 1 and p-1
 - Variable Definitions:
-$A = g^a \pmod p$  
-$B = g^b \pmod p$  
-$s = B^a \pmod p$  
-$s = A^b \pmod p$
+
+$$A = g^a \pmod p$$
+
+$$B = g^b \pmod p$$
+
+$$s = B^a \pmod p$$
+
+$$s = A^b \pmod p$$
+
 
        
 
