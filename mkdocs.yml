@@ -1,5 +1,6 @@
 site_name: Tyler's TACC Research
 docs_dir: docs
+
 theme:
   name: readthedocs
 
@@ -11,15 +12,15 @@ nav:
       - Meeting 4: tms/meeting-4.md
 
 markdown_extensions:
-  - pymdownx.arithmatex:
-      generic: true
-extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML
-
   - admonition
   - toc:
       permalink: true
   - tables
   - footnotes
   - codehilite
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML
 
