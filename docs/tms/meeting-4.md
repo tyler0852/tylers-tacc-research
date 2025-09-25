@@ -2,6 +2,10 @@
 
 ## What Got Done
 
+### Diffie-Hellman
+- Learned how Diffie-Hellman works
+    - 
+
 ## Road Blockers and Questions
 
 ## What's Next!
