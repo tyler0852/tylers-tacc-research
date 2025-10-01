@@ -98,7 +98,8 @@ $$s = A^b \pmod p$$
 
 #### Other Public Key Encryption Methods
 
-- **RSA (Rivest–Shamir–Adleman)**  
+- **RSA (Rivest–Shamir–Adleman)**
+    - First widely practiced e
     - Based on the difficulty of factoring large integers.  
     - Widely used in older TLS handshakes, digital certificates, and PGP.  
     - Being phased out in favor of elliptic-curve methods due to large key sizes.  
@@ -222,6 +223,50 @@ $$s = A^b \pmod p$$
     - VPN authentication  
     - Secure email (S/MIME)  
     - Smart cards / enterprise logins  
+
+#### TLS (Transport Layer Security)
+
+TLS is the protocol that makes communication over the internet secure. It’s what HTTPS uses under the hood. The main idea is that TLS makes sure of three things:
+
+- confidentiality: data is encrypted so only the client and server can read it  
+- integrity: if data is tampered with in transit, it can be detected  
+- authenticity: the client knows it’s really talking to the right server (and not an attacker pretending to be the server)  
+
+TLS works by combining both asymmetric encryption (public/private keys) and symmetric encryption (shared session key).  
+- asymmetric encryption is used at the start, to safely exchange the session key  
+- symmetric encryption is used after that, since it’s much faster for actual data transfer  
+
+TLS also relies on certificates, which are used to prove that the server is who it says it is. That’s where the CA and PKI pieces fit in.  
+
+---
+
+#### TLS Handshake Workflow
+
+The handshake is how TLS sets up that secure connection before any real data is sent. It happens in four main steps:
+
+1. tcp handshake  
+   - before TLS can start, the client and server set up a normal tcp connection with the three-way handshake  
+   - client → syn  
+   - server → syn + ack  
+   - client → ack  
+
+2. certificate check  
+   - client says hello with its supported cipher suites, tls version, and some random values  
+   - server replies with hello, picks the parameters, and sends its certificate (which has its public key)  
+   - client checks that the certificate is valid and trusted (signed by a ca)  
+
+3. key exchange  
+   - client generates a session key (symmetric key)  
+   - it encrypts the session key with the server’s public key and sends it over  
+   - server uses its private key to decrypt it  
+   - now both sides share the same session key  
+   - change cipher spec + finished messages confirm that encryption is switched on  
+
+4. data transmission  
+   - from here on, both client and server use symmetric encryption with the shared session key  
+   - all application data (like the actual web page, api data, etc.) is encrypted before being sent  
+
+in short: asymmetric at the start to safely set up, symmetric for the actual communication. that’s what keeps tls fast and secure.  
 
 
 ## Road Blockers and Questions
