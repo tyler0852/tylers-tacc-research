@@ -2,7 +2,7 @@
 
 ## What Got Done
 
-#### Learned how Diffie-Hellman works
+#### Diffie-Hellman
 
 - Reviewed the famous Alice and Bob example
 - In short, the process looks like:
