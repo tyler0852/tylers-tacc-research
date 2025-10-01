@@ -184,6 +184,21 @@ $$s = A^b \pmod p$$
     - For dev/testing you generate your own (self-signed) and trust it locally
     - Tools like `openssl` or `mkcert` can create a local root + leaf certs for a smoother workflow
 
+#### Core PKI Entities
+
+- **CA (Certificate Authority)**  
+    - The trusted party that issues and signs certificates  
+    - Root CAs are built into operating systems and browsers  
+    - They are what make a certificate trusted outside of your own system  
+
+- **RA (Registration Authority)**  
+    - Handles identity checks before a certificate is issued  
+    - Works with the CA to verify that the requester is who they claim to be  
+
+- **VA (Validation Authority)**  
+    - Provides a way to check if a certificate is still valid  
+    - Helps make sure expired or untrusted certificates can’t be used  
+
 
 ## Road Blockers and Questions
 
