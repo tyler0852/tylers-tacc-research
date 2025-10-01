@@ -95,44 +95,47 @@ $$s = A^b \pmod p$$
     - SSH
     - VPNs (e.g., WireGuard)
     - Messaging apps (Signal, WhatsApp, etc.)
- 
-#### Other Public Key Encryption Methods
 
 #### Other Public Key Encryption Methods
 
 - **RSA (Rivest–Shamir–Adleman)**  
-  - Based on the difficulty of factoring large integers.  
-  - Widely used in older TLS handshakes, digital certificates, and PGP.  
-  - Being replaced by elliptic curve methods due to large key sizes needed for security.  
+    - Based on the difficulty of factoring large integers.  
+    - Widely used in older TLS handshakes, digital certificates, and PGP.  
+    - Being phased out in favor of elliptic-curve methods due to large key sizes.  
 
-- **ECC (Elliptic Curve Cryptography)**  
-  - General framework using elliptic curves for public key cryptography.  
-  - Provides the same security as RSA with much smaller key sizes.  
-  - Basis for ECDH/ECDHE and signature algorithms like ECDSA and EdDSA.  
+- **DSA (Digital Signature Algorithm)**  
+    - Based on the discrete logarithm problem.  
+    - Used for digital signatures; less common today.  
 
-- **DSA / ECDSA (Digital Signature Algorithm / Elliptic Curve DSA)**  
-  - Used primarily for digital signatures rather than encryption.  
-  - ECDSA is common in TLS certificates, SSH, and blockchain systems.  
+- **ECDHE (Elliptic Curve Diffie–Hellman [Ephemeral])**  
+    - Based on the elliptic curve discrete logarithm problem.  
+    - ECDHE provides forward secrecy by generating new keys for each session.  
+
+- **ECDSA (Elliptic Curve Digital Signature Algorithm)**  
+    - Elliptic-curve version of DSA.  
+    - Used for digital signatures in TLS certificates, SSH, and blockchains.  
 
 - **EdDSA (Edwards-curve Digital Signature Algorithm)**  
-  - Newer, faster signature algorithm (uses curves like Ed25519).  
-  - Emphasizes performance and security against common implementation pitfalls.  
-  - Used in SSH, TLS 1.3, and many modern protocols.  
+    - Modern elliptic-curve signature scheme (e.g., Ed25519, Ed448).  
+    - Faster and safer against side-channel attacks than ECDSA.  
 
 - **Post-Quantum Algorithms (PQCrypto)**  
-  - Designed to resist quantum attacks that could break RSA/ECC.  
-  - Examples: Kyber (key exchange), Dilithium (signatures).  
-  - Standardization ongoing (NIST PQC project).  
+    - Based on hard lattice problems and other quantum-resistant math.  
+    - Examples: Kyber (key exchange), Dilithium (signatures).  
+    - Currently being standardized by NIST for future use.  
 
-| Algorithm | Security Basis                   | Typical Key Size | Strengths | Weaknesses | Common Uses |
-|-----------|----------------------------------|------------------|-----------|------------|-------------|
-| **RSA**   | Integer factorization             | 2048–4096 bits   | Well-studied, widely deployed | Slow, large key sizes | TLS (older), PGP, digital certificates |
-| **ECC**   | Elliptic curve discrete log problem | 256–521 bits     | High security per bit, efficient | More complex math, patent history | TLS, SSH, cryptocurrencies |
-| **ECDH**  | Elliptic curve discrete log (key exchange) | 256–521 bits | Secure key exchange, efficient | No forward secrecy if static keys | TLS, VPNs, messaging |
-| **ECDHE** | Same as ECDH, but ephemeral keys | 256–521 bits     | Forward secrecy, widely adopted | Slightly more overhead | TLS 1.3, SSH, Signal, WireGuard |
-| **DSA/ECDSA** | Discrete log / elliptic curve discrete log | 2048+ / 256–521 bits | Digital signatures, efficient (ECDSA) | Verification slower (DSA), needs good randomness | TLS certs, SSH, Bitcoin/Ethereum |
-| **EdDSA** | Elliptic curves (Ed25519/Ed448)  | 256–448 bits     | Very fast, resistant to side-channel attacks | Newer, less legacy support | TLS 1.3, SSH, modern apps |
-| **Post-Quantum (e.g. Kyber, Dilithium)** | Lattice problems (PQC) | Varies (larger than ECC) | Resistant to quantum attacks | Still experimental, large signatures/keys | Future TLS, VPNs, secure messaging |
+---
+
+| Algorithm | Security Basis | Typical Key Size | Strengths | Weaknesses | Common Uses |
+|-----------|----------------|------------------|-----------|------------|-------------|
+| **RSA**   | Integer factorization | 2048–4096 bits | Well-studied, widely deployed | Slow, large key sizes | TLS (older), PGP, digital certificates |
+| **DSA**   | Discrete logarithm    | 2048+ bits     | First digital signature standard | Needs good randomness, less efficient | Legacy signatures |
+| **ECDH**  | Elliptic curve discrete log (key exchange) | 256–521 bits | Secure key exchange, efficient | No forward secrecy if static | TLS, VPNs, messaging |
+| **ECDHE** | Elliptic curve discrete log (ephemeral key exchange) | 256–521 bits | Forward secrecy, widely adopted | Slightly more overhead | TLS 1.3, SSH, Signal, WireGuard |
+| **ECDSA** | Elliptic curve discrete log (signatures) | 256–521 bits | Efficient signatures, widely used | More complex math | TLS certs, SSH, Bitcoin/Ethereum |
+| **EdDSA** | Elliptic curve discrete log (Edwards curves) | 256–448 bits | Very fast, side-channel resistant | Newer, less legacy support | TLS 1.3, SSH, modern apps |
+| **Post-Quantum (e.g. Kyber, Dilithium)** | Lattice problems (PQC) | Varies (much larger than ECC) | Resistant to quantum attacks | Still experimental, larger signatures | Future TLS, VPNs, secure messaging |
+
 
 
 ## Road Blockers and Questions
