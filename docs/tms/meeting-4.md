@@ -268,6 +268,33 @@ The handshake is how TLS sets up that secure connection before any real data is 
 
 in short: asymmetric at the start to safely set up, symmetric for the actual communication. that’s what keeps tls fast and secure.  
 
+#### Acronyms
+
+- ACME – Automated Certificate Management Environment  
+- CA – Certificate Authority  
+- DLP – Discrete Logarithm Problem  
+- DSA – Digital Signature Algorithm  
+- DV – Domain Validated  
+- ECDH – Elliptic Curve Diffie-Hellman  
+- ECDHE – Elliptic Curve Diffie-Hellman Ephemeral  
+- ECDSA – Elliptic Curve Digital Signature Algorithm  
+- EdDSA – Edwards-curve Digital Signature Algorithm  
+- EV – Extended Validation  
+- HTTPS – Hypertext Transfer Protocol Secure  
+- OV – Organization Validated  
+- PGP – Pretty Good Privacy  
+- PKI – Public Key Infrastructure  
+- PQC – Post-Quantum Cryptography  
+- PQCrypto – Post-Quantum Cryptography  
+- RA – Registration Authority  
+- RSA – Rivest–Shamir–Adleman  
+- SAN – Subject Alternative Name  
+- SSL – Secure Sockets Layer  
+- TLS – Transport Layer Security  
+- VA – Validation Authority  
+- VPN – Virtual Private Network  
+- X.509 – Standard defining the format of public key certificates  
+
 
 ## Road Blockers and Questions
 
