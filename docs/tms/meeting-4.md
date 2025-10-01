@@ -136,6 +136,53 @@ $$s = A^b \pmod p$$
 | **EdDSA** | Elliptic curve discrete log (Edwards curves) | 256–448 bits | Very fast, side-channel resistant | Newer, less legacy support | TLS 1.3, SSH, modern apps |
 | **Post-Quantum (e.g. Kyber, Dilithium)** | Lattice problems (PQC) | Varies (much larger than ECC) | Resistant to quantum attacks | Still experimental, larger signatures | Future TLS, VPNs, secure messaging |
 
+#### Certificates (X.509 / SSL/TLS)
+
+- A certificate is basically a digital document that links an identity (like a website or business) to a public key
+- Certificates follow the X.509 standard which defines their structure
+- They are used in SSL/TLS to let two parties verify each other and then set up an encrypted connection
+- At a high level, they act like digital ID cards for systems on the internet
+
+- Key terms:
+    - **X.509**: The standard that defines certificate format and fields
+    - **SSL (Secure Sockets Layer)**: Old protocol for encrypted web traffic (now obsolete)
+    - **TLS (Transport Layer Security)**: The modern protocol that replaced SSL, what we really use today
+    - **Issuer**: The entity that signs and vouches for the certificate
+    - **CA (Certificate Authority)**: A trusted third party that issues certificates
+    - **Self-signed certificate**: A certificate where the subject signs itself; valid locally, but not globally trusted
+    - **CA root certificate**: A self-signed certificate trusted because it comes pre-installed in OS and browsers
+
+- What’s included in a certificate:
+    - Domain name or identity
+    - Public key
+    - Issuer
+    - Issuer’s digital signature
+    - Validity period (currently max 13 months)
+    - Extensions (subject alt names, allowed key usages, etc.)
+
+- Types of certificates:
+    - **DV (Domain Validated)**: Proves control of the domain. Easiest, often free.
+    - **OV (Organization Validated)**: Adds verified business info.
+    - **EV (Extended Validation)**: Strongest vetting, used where assurance is critical.
+    - **Wildcard**: Covers a domain and all subdomains.
+    - **Multi-domain (SAN)**: Covers multiple domains in one certificate.
+
+- Certificate trust model:
+    - Systems and browsers ship with a trust store of CA root certificates
+    - A site cert is trusted if it chains back to a root in that trust store
+    - Example: Root CA (self-signed) → Intermediate CA → Leaf certificate (your website)
+
+- Let’s Encrypt:
+    - A free, open, automated CA
+    - Issues DV certificates at no cost
+    - Certificates are short-lived (90 days) but can auto-renew
+    - Uses the ACME protocol (e.g., certbot tool) to automate issuing and renewal
+    - Typical flow: install certbot → prove you control the domain → cert issued → server configured for HTTPS
+
+- Localhost certificates:
+    - Let’s Encrypt can’t issue certs for “localhost” since nobody owns it
+    - For dev/testing you generate your own (self-signed) and trust it locally
+    - Tools like `openssl` or `mkcert` can create a local root + leaf certs for a smoother workflow
 
 
 ## Road Blockers and Questions
