@@ -199,6 +199,30 @@ $$s = A^b \pmod p$$
     - Provides a way to check if a certificate is still valid  
     - Helps make sure expired or untrusted certificates can’t be used  
 
+#### Public Key Infrastructure (PKI)
+
+- PKI is the system that ties everything together
+- PKI makes certificates and public/private keys actually usable on the internet.  
+- At its core, PKI is about binding an identity to a public key and making that binding trustworthy. Without PKI, you could generate keys and certs, but nobody else would know whether to trust them.
+
+- What it consists of:  
+    - CA (Certificate Authority): trusted third party that issues and signs certificates. Root CAs are self-signed and act as the anchor of trust.  
+    - RA (Registration Authority): verifies the identity of someone requesting a certificate. Think of it as the vetting step before the CA issues it.  
+    - VA (Validation Authority): provides info about whether a certificate is still valid (revoked or expired).  
+    - Certificates: documents that link identities to public keys. The issuer (who signed it) is what makes the difference between a self-signed cert and a publicly trusted cert.  
+    - Policies and procedures: rules that define how certs are issued, renewed, and revoked.
+
+- What PKI provides (trust services):  
+    - Confidentiality: prevents outsiders from reading your communication (e.g., TLS encrypts data in transit).  
+    - Integrity: tampering with data can be detected.  
+    - Authenticity: you can be sure of who you’re talking to because their cert chains back to a trusted CA.  
+
+- Use Cases:  
+    - HTTPS / TLS connections  
+    - VPN authentication  
+    - Secure email (S/MIME)  
+    - Smart cards / enterprise logins  
+
 
 ## Road Blockers and Questions
 
