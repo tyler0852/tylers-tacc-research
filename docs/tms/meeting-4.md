@@ -57,9 +57,44 @@ $$s = A^b \pmod p$$
     - Messaging apps
     - The frequency in which a Diffie-Hellman occurs will change on the use case. For things like TLS and SSH, it will most likely do a Diffie-Hellman everytime you make a connection. For something like messaging apps, it will be used repeatedly, could be every message, could be longer until it is invoked again.
 
+#### The Discrete Logarithm Problem (DLP)
 
+- This is what makes Diffie-Hellman work
+- The DLP states:
+    - Given: A prime modulus p, a generator g, and a value A = g^a mod p
+    - Find: a using A, g, and p
+- With a prime number and a good generator, g^a mod p cycles through almost all possible values up to p
+- This makes A look random, but there is no way to find a other than brute force
 
-       
+#### Elliptic Curve Diffie-Hellman (ECDH)
+
+- ECDH is the elliptic curve version of Diffie-Hellman
+- Instead of using exponentiation in integers mod p, it uses scalar multiplication on points of an elliptic curve
+- Domain Parameters (public):
+    - p: field (modulo p)
+    - a, b: curve parameters, where the curve is defined as y² = x³ + ax + b
+    - G: generator point (base point) on the curve
+    - n: order of G (size of subgroup)
+    - h: cofactor (|E(Zp)| / n, ideally h = 1)
+- Private, secret variables:
+    - a: Alice’s private key
+    - b: Bob’s private key
+- Public, not secret variables:
+    - A = aG (Alice’s public key, point on curve)
+    - B = bG (Bob’s public key, point on curve)
+- Shared Secret:
+    - Alice computes: S = aB = abG
+    - Bob computes: S = bA = abG
+    - Both arrive at the same point S
+- Why elliptic curves?
+    - Much smaller encryption keys use fewer memory and cpu resources
+    - Has the same security
+    - Faster, requires less bandwidth, and more efficient overall
+- Use Cases:
+    - TLS (modern versions use ECDHE for forward secrecy)
+    - SSH
+    - VPNs (e.g., WireGuard)
+    - Messaging apps (Signal, WhatsApp, etc.)
 
 ## Road Blockers and Questions
 
