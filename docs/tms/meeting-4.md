@@ -1,4 +1,4 @@
-# Meeting 4 - September 24th, 2025
+# Meeting 4 - September 31st, 2025
 
 ## What Got Done
 
