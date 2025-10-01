@@ -295,6 +295,19 @@ in short: asymmetric at the start to safely set up, symmetric for the actual com
 - VPN – Virtual Private Network  
 - X.509 – Standard defining the format of public key certificates  
 
+#### Running tms_loadtest with TLS
+
+- First, I generated a self-signed certificate and key
+
+```bash
+tyler@Tylers-MacBook-Pro tms_server % openssl req -x509 -out server.crt -keyout server.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config <( \
+   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+```
+
+    - This was done inside tms_server
+    - This created two files `server.crt` and `server.key`
 
 ## Road Blockers and Questions
 
