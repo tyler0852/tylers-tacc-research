@@ -145,13 +145,13 @@ $$s = A^b \pmod p$$
 - At a high level, they act like digital ID cards for systems on the internet
 
 - Key terms:
-    - **X.509**: The standard that defines certificate format and fields
-    - **SSL (Secure Sockets Layer)**: Old protocol for encrypted web traffic (now obsolete)
-    - **TLS (Transport Layer Security)**: The modern protocol that replaced SSL, what we really use today
-    - **Issuer**: The entity that signs and vouches for the certificate
-    - **CA (Certificate Authority)**: A trusted third party that issues certificates
-    - **Self-signed certificate**: A certificate where the subject signs itself; valid locally, but not globally trusted
-    - **CA root certificate**: A self-signed certificate trusted because it comes pre-installed in OS and browsers
+    - X.509: The standard that defines certificate format and fields
+    - SSL (Secure Sockets Layer): Old protocol for encrypted web traffic (now obsolete)
+    - TLS (Transport Layer Security): The modern protocol that replaced SSL, what we really use today
+    - Issuer: The entity that signs and vouches for the certificate
+    - CA (Certificate Authority): A trusted third party that issues certificates
+    - Self-signed certificate: A certificate where the subject signs itself; valid locally, but not globally trusted
+    - CA root certificate: A self-signed certificate trusted because it comes pre-installed in OS and browsers
 
 - What’s included in a certificate:
     - Domain name or identity
@@ -162,11 +162,11 @@ $$s = A^b \pmod p$$
     - Extensions (subject alt names, allowed key usages, etc.)
 
 - Types of certificates:
-    - **DV (Domain Validated)**: Proves control of the domain. Easiest, often free.
-    - **OV (Organization Validated)**: Adds verified business info.
-    - **EV (Extended Validation)**: Strongest vetting, used where assurance is critical.
-    - **Wildcard**: Covers a domain and all subdomains.
-    - **Multi-domain (SAN)**: Covers multiple domains in one certificate.
+    - DV (Domain Validated): Proves control of the domain. Easiest, often free.
+    - OV (Organization Validated): Adds verified business info.
+    - EV (Extended Validation): Strongest vetting, used where assurance is critical.
+    - Wildcard: Covers a domain and all subdomains.
+    - Multi-domain (SAN): Covers multiple domains in one certificate.
 
 - Certificate trust model:
     - Systems and browsers ship with a trust store of CA root certificates
@@ -187,16 +187,16 @@ $$s = A^b \pmod p$$
 
 #### Core PKI Entities
 
-- **CA (Certificate Authority)**  
+- CA (Certificate Authority)  
     - The trusted party that issues and signs certificates  
     - Root CAs are built into operating systems and browsers  
     - They are what make a certificate trusted outside of your own system  
 
-- **RA (Registration Authority)**  
+- RA (Registration Authority)  
     - Handles identity checks before a certificate is issued  
     - Works with the CA to verify that the requester is who they claim to be  
 
-- **VA (Validation Authority)**  
+- VA (Validation Authority)  
     - Provides a way to check if a certificate is still valid  
     - Helps make sure expired or untrusted certificates can’t be used  
 
@@ -245,26 +245,26 @@ TLS also relies on certificates, which are used to prove that the server is who 
 The handshake is how TLS sets up that secure connection before any real data is sent. It happens in four main steps:
 
 1. tcp handshake  
-   - before TLS can start, the client and server set up a normal tcp connection with the three-way handshake  
-   - client → syn  
-   - server → syn + ack  
-   - client → ack  
+     - before TLS can start, the client and server set up a normal tcp connection with the three-way handshake  
+     - client → syn  
+     - server → syn + ack  
+     - client → ack  
 
 2. certificate check  
-   - client says hello with its supported cipher suites, tls version, and some random values  
-   - server replies with hello, picks the parameters, and sends its certificate (which has its public key)  
-   - client checks that the certificate is valid and trusted (signed by a ca)  
+     - client says hello with its supported cipher suites, tls version, and some random values  
+     - server replies with hello, picks the parameters, and sends its certificate (which has its public key)  
+     - client checks that the certificate is valid and trusted (signed by a ca)  
 
 3. key exchange  
-   - client generates a session key (symmetric key)  
-   - it encrypts the session key with the server’s public key and sends it over  
-   - server uses its private key to decrypt it  
-   - now both sides share the same session key  
-   - change cipher spec + finished messages confirm that encryption is switched on  
+     - client generates a session key (symmetric key)  
+     - it encrypts the session key with the server’s public key and sends it over  
+     - server uses its private key to decrypt it  
+     - now both sides share the same session key  
+     - change cipher spec + finished messages confirm that encryption is switched on  
 
 4. data transmission  
-   - from here on, both client and server use symmetric encryption with the shared session key  
-   - all application data (like the actual web page, api data, etc.) is encrypted before being sent  
+     - from here on, both client and server use symmetric encryption with the shared session key  
+     - all application data (like the actual web page, api data, etc.) is encrypted before being sent  
 
 in short: asymmetric at the start to safely set up, symmetric for the actual communication. that’s what keeps tls fast and secure.  
 
