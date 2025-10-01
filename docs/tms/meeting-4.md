@@ -295,9 +295,7 @@ in short: asymmetric at the start to safely set up, symmetric for the actual com
 - VPN – Virtual Private Network  
 - X.509 – Standard defining the format of public key certificates  
 
-#### Running tms_loadtest with TLS
-
-- First, I generated a self-signed certificate and key
+#### Creating a Self-Signed Certificate and Key
 
 ```bash
 tyler@Tylers-MacBook-Pro tms_server % openssl req -x509 -out server.crt -keyout server.key \
@@ -306,9 +304,18 @@ tyler@Tylers-MacBook-Pro tms_server % openssl req -x509 -out server.crt -keyout 
    printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
 ```
 
-    - This was done inside tms_server
-    - This created two files `server.crt` and `server.key`
+- This was done inside tms_server
+- This created two files `server.crt` and `server.key`
 
 ## Road Blockers and Questions
 
+#### Attempt at Running Loadtest With and Without TLS
+
+- With TLS: all attempts failed, certificate not trusted  
+- With No-TLS: getversion worked, scaled 10×100k requests fine  
+- Auth endpoints (createkey, getclient, getkey): 401 unauthorized or missing env vars  
+- Summary: only getversion ran successfully, TLS and auth scenarios still blocked  
+
 ## What's Next!
+
+- Meet with one of you early next week and demo loadtest
