@@ -10,6 +10,7 @@ nav:
       - Meeting 2: tms/meeting-2.md
       - Meeting 3: tms/meeting-3.md
       - Meeting 4: tms/meeting-4.md
+      - Meeting 5: tms/meeting-5.md
 
 markdown_extensions:
   - admonition
