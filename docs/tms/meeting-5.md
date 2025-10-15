@@ -14,6 +14,8 @@
 | 1 | 50 000 | None | createkey | 0.04 | 10 | 0 | ~27 s | ~1 850 req/s, stable |
 | 1 | 500 000 | None | createkey | 0.05 | 61 | 0 | ~4.6 min | Consistent throughput |
 | 1 | 1 000 000 | None | createkey | 0.05 | 82 | 0 | ~8.9 min | Stable long run |
+| 1 | 1 000 000 | None | getversion | 0.00 | 1 | 0 | ~36 s | ~27 800 req/s throughput, 100% success (200); constant 1 ms latency, confirms lightweight endpoint |
+
 
 ---
 
