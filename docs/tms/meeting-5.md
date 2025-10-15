@@ -4,22 +4,23 @@
 
 ### Load Testing Results (Plaintext HTTP)
 
-#### 1. Single-User Baseline
+#### Single-User Baseline
 
 | Users | Iterations | Throttle | Scenario | Avg Latency (ms) | Max (ms) | Fails | Runtime | Notes |
 |:------|:-----------|:----------|:-----------|:----------------|:-----------|:--------|:----------|:-------|
 | 1 | 100 | None | createkey | 0.52 | 9 | 0 | ~1 s | Baseline sanity check |
-| 1 | 1 000 | None | createkey | 0.09 | 7 | 0 | ~1 s | Clean run |
-| 1 | 10 000 | None | createkey | 0.04 | 5 | 0 | ~6 s | Sustained, no degradation |
-| 1 | 50 000 | None | createkey | 0.04 | 10 | 0 | ~27 s | ~1 850 req/s, stable |
-| 1 | 500 000 | None | createkey | 0.05 | 61 | 0 | ~4.6 min | Consistent throughput |
-| 1 | 1 000 000 | None | createkey | 0.05 | 82 | 0 | ~8.9 min | Stable long run |
-| 1 | 1 000 000 | None | getversion | 0.00 | 1 | 0 | ~36 s | ~27 800 req/s throughput, 100% success (200); constant 1 ms latency, confirms lightweight endpoint |
+| 1 | 1 000 | None | createkey | 0.09 | 7 | 0 | ~1 s | stable |
+| 1 | 10 000 | None | createkey | 0.04 | 5 | 0 | ~6 s | stable |
+| 1 | 50 000 | None | createkey | 0.04 | 10 | 0 | ~27 s | stable |
+| 1 | 500 000 | None | createkey | 0.05 | 61 | 0 | ~4.6 min | stable |
+| 1 | 1 000 000 | None | createkey | 0.05 | 82 | 0 | ~8.9 min | Stable long run, heaviest endpoint |
+| 1 | 1 000 000 | None | getversion | 0.00 | 1 | 0 | ~36 s | 100% success, lightweight endpoint |
+| 1 | 1 000 000 | None | getclient | 0.00 | 6 | 0 | ~155 s | 100% success, lightweight endpoint |
 
 
 ---
 
-#### 2. Moderate Load (5 Users)
+#### Moderate Load (5 Users)
 
 | Users | Iterations | Throttle | Scenario | Avg Latency (ms) | Max (ms) | Fails | Runtime | Notes |
 |:------|:-----------|:----------|:-----------|:----------------|:-----------|:--------|:----------|:-------|
@@ -30,7 +31,7 @@
 
 ---
 
-#### 3. High Load (10 Users, No Throttling)
+#### High Load (10 Users, No Throttling)
 
 | Users | Iterations | Throttle | Scenario | Avg Latency (ms) | Max (ms) | Fails | Runtime | Notes |
 |:------|:-----------|:----------|:-----------|:----------------|:-----------|:--------|:----------|:-------|
@@ -42,25 +43,36 @@
 
 ---
 
-#### 4. Throttled Load Tests
+#### Throttled Load Tests
 
 | Users | Iterations | Throttle | Scenario | Avg Latency (ms) | Max (ms) | Fails | Runtime | Notes |
 |:------|:-----------|:----------|:-----------|:----------------|:-----------|:--------|:----------|:-------|
-| 10 | 3 000 ea | 10 req/s per user (≈100 req/s total) | createkey | 4.27 | 381 | 0 | 69 min | Fully stable for entire duration |
-| 10 | 3 000 ea | 250 req/s per user (≈2 500 req/s total) | createkey | 2.18 | 17 | 0 | 2.4 min | Stable upper-limit throughput |
-| 10 | 20 000 ea | 250 req/s per user (≈2 500 req/s total) | createkey | 54.7 | 60 171 | 70 | 12.3 min | Stable ~7 min, then progressive timeouts (64 timeouts, 3 500s, 2 401s, 1 400) |
+| 10 | 3 000 ea | 10 req/s per user (≈100 req/s total) | createkey | 4.27 | 381 | 0 | 69 min | stable |
+| 10 | 3 000 ea | 250 req/s per user (≈2 500 req/s total) | createkey | 2.18 | 17 | 0 | 2.4 min | Stable |
+| 10 | 20 000 ea | 250 req/s per user (≈2 500 req/s total) | createkey | 54.7 | 60 171 | 70 | 12.3 min | Stable ~7 min, then timeouts |
 
 ---
 
-#### 5. Overall Findings
+#### Overall Findings
 
-- Stable operation up to **≈ 2 500 req/s total** under 10-user load.  
-- Failures appear as **timeouts → mixed 400/401/500 codes** during stall.  
-- Throughput and latency scale predictably until resource exhaustion.  
-- **Throttling** prevents overload and preserves performance stability.  
-- Next step: **repeat tests under TLS** (with certificate checking disabled) to measure encryption overhead and confirm identical failure patterns.
+- Stable operation up to ≈ 250 req/s with 10-user load for 7 minutes
+- Failures appear all timeouts from tms_server crashing 
+- Throughput and latency scale predictably  
+- Throttling prevents overload and preserves performance stability.  
 
 
 ## Road Blockers and Questions
 
+- When running test for 'getkey', I need the import for 'TMS_PUBLEY_FINGERPRINT'
+
+- Couldn't figure out how to bypass cert checking while still including encryption
+    - Tried to just use ChatGPT to see if the problem can be solved quickly, turn out I need to actually learn it
+    - Created a new 'tms_loadtest_modified'
+    - Tried to create a custom 'reqwest::Client' that ignores invalid certs
+    - Seems like I was getting version incompatability, need to spend more time to fully understand
+
 ## What's Next
+
+- Do more research about how to bypass cert checking 
+
+- See if I can run a test that has things fail during, not just when it crashes
