@@ -43,13 +43,26 @@
 
 ---
 
+#### Higher Load (40 Users, No Throttling)
+
+| Users | Iterations | Throttle | Scenario | Avg Latency (ms) | Max (ms) | Fails | Runtime | Notes |
+|:------|:-----------|:----------|:-----------|:----------------|:-----------|:--------|:----------|:-------|
+| 10 | 1 000 ea | None | createkey | 0.07 | 9 | 0 | 10 s | Clean short run |
+| 10 | 2 500 ea | None | createkey | 2.51 | 358 | 0 | 18 s | Fully stable |
+| 10 | 3 000 ea | None | createkey | 48.09 | 60 003 | 9 | 52 s | First timeouts after ~11 k req |
+| 10 | 3 500 ea | None | createkey | 47.02 | 60 002 | 9 | 32 s | Instability confirmed |
+| 10 | 5 000 ea | None | createkey | 179.89 | 60 003 | 30 | 2.2 min | Server froze after ~10 k req |
+
+---
+
 #### Throttled Load Tests
 
 | Users | Iterations | Throttle | Scenario | Avg Latency (ms) | Max (ms) | Fails | Runtime | Notes |
 |:------|:-----------|:----------|:-----------|:----------------|:-----------|:--------|:----------|:-------|
-| 10 | 3 000 ea | 10 req/s per user (≈100 req/s total) | createkey | 4.27 | 381 | 0 | 69 min | stable |
-| 10 | 3 000 ea | 250 req/s per user (≈2 500 req/s total) | createkey | 2.18 | 17 | 0 | 2.4 min | Stable |
-| 10 | 20 000 ea | 250 req/s per user (≈2 500 req/s total) | createkey | 54.7 | 60 171 | 70 | 12.3 min | Stable ~7 min, then timeouts |
+| 40 | 1 000 | None | createkey | 0.07 | 12 | 0 | ~40 s | Fully stable |
+| 40 | 5 000 | None | createkey | 2.57 | 458 | 40 (0.45%) | ~57 s | Froze after 8900 of the 200,000 runs |
+
+
 
 ---
 
