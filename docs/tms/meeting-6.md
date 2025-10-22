@@ -30,6 +30,7 @@ The only difference I made in the test was increased iteration to 50,000
 I used `top` and isolated tms_server's PID to view diagnostics 
 
 Results:
+
 - Got through almost 200k iterations, I did clear the sqlite db inbetween these runs. I expect that it was less full during this run. Maybe thats why it was able to get through almost 200K as opposed to 60K
 - Lasted 7 minutes of CPU runtime
 - Was sleeping more that it was running
@@ -37,6 +38,7 @@ Results:
 - CPU usage ranged between 20-60% the entire time until it crashed and instantly dropped to 0%
 
 Thoughts:
+
 - My inital thoughts are that because tms_server is sleeping much more than it is running. The server is I/O bounded writing things to sqlite and not CPU or memory bounded
 - I'm guessing that it can compute much faster than it can output the results, a queue forms, then at some point the queue gets too long for sqlite to handle and then crashes
 - This would explain why throttling helps because it gives tms_server more time to output results
