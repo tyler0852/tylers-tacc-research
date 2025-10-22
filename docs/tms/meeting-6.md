@@ -45,5 +45,24 @@ Thoughts:
 - I feel like this also explains why regardless of certain factors, different test will fail in similar spots (i.e. different test both failing after 50k iterations)
 - All tests for 1 user, regardless of how many iterations, never failed. Also supports this hypothesis
 - Once we add more users, only 1 can write the sqlite at a time, others wait, queue forms
+- I then removed throttling and it failed after about ~8 seconds of CPU run time, further supports current hypothesis
 
-I then removed throttling and it failed after about ~8 seconds of CPU run time, further supports current hypothesis
+### A Solution?
+
+- After this, I thought about if there would be an obtainable solution if this is the problelm
+- I thought about the extreme case, say this server becomes immesly popular
+- I ran a test with 1000 users, all trying to do 100000 iterations, but limited them to 10 req/s
+- The server runs with no issues, even with that many concurrent users as long as we limit the amount of requests they do
+- Can we make a global/server max amount of requests that can happen, and then spread that among the current users doing requests?
+
+## Road Blocker and Questions
+
+- Need environment variables for `getkey`
+
+## Next Steps
+
+- If we think this is the issue, modifying tms_server to limit the amount of global requests it takes
+- This would require more testing to more accuretly figuring how much it can handle
+- We would need to note if adding things like tls back in the picture would affect this limit
+- Would also need to account for testing being done locally, not where the server would be hosted at TACC
+- Would be interesting to test this on a TACC cluster, which would likly have much better I/O than I am getting running locally
