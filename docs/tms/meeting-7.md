@@ -29,9 +29,10 @@ cargo run --release -- --host http://127.0.0.1:3000 --users 1000 --iterations 10
 | writeheavy (10 rows) | 50 | 1,000 | None | 102.8 | 1 (0%) | 153 s | 
 | writeheavy (10 rows) | 1000 | 100,000 | None | 5.29 | 99.4% | ~37 min | 
 
+### Observations
 
-
-## Road Blocker and Questions
-
+- `tms_min` never flat out crashed
+- The main error I was getting was "error trying to connect: tcp open error: Too many open files (os error 24)"
 
 ## Next Steps
+- Keep building this and better understand the results
