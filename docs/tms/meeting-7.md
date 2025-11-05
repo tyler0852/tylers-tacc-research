@@ -22,12 +22,12 @@ cargo run --release -- --host http://127.0.0.1:3000 --users 1000 --iterations 10
 
 ### Results
 
-| Scenario | Users | Iterations | Throttle | Avg Latency (ms) | Max (ms) | Fails | Runtime | Notes |
-|:-----------|:------|:-----------|:----------|:----------------|:-----------|:--------|:----------|:-------|
-| writeheavy (1000 rows) | 10 | 1,000 | None | 2,937 | 15,550 | 9 (0%) | 26 min | Slow but stable; minor connection resets |
-| writeheavy (1000 rows) | 1000 | 100,000 | None | 390.9 | 60,531 | 99.9% | ~1 hr | Crashed with “Too many open files (os error 24)” and timeouts |
-| writeheavy (10 rows) | 50 | 1,000 | None | 102.8 | 5,360 | 1 (0%) | 153 s | Completed successfully; no DB lock contention |
-| writeheavy (10 rows) | 1000 | 100,000 | None | 5.29 | 41,041 | 99.4% | ~37 min | High throughput (~40k req/s) before hitting file descriptor cap |
+| Scenario | Users | Iterations | Throttle | Avg Latency (ms) | Fails | Runtime |
+|:-----------|:------|:-----------|:----------|:----------------|:--------|:----------|
+| writeheavy (1000 rows) | 10 | 1,000 | None | 2,937 | 9 (0%) | 26 min | 
+| writeheavy (1000 rows) | 1000 | 100,000 | None | 390.9 | 99.9% | ~1 hr | 
+| writeheavy (10 rows) | 50 | 1,000 | None | 102.8 | 1 (0%) | 153 s | 
+| writeheavy (10 rows) | 1000 | 100,000 | None | 5.29 | 99.4% | ~37 min | 
 
 
 
