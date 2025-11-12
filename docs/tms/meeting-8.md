@@ -2,6 +2,10 @@
 
 ## What Got Done
 
+### Added GitHub Links Page
+
+- [GitHub Links](https://tylers-tacc-research.readthedocs.io/en/latest/other/githublinks/)
+
 ### Learned About Connection Pooling
 
 - In order for our rust server and the database to be able to talk, they need to form a connection
