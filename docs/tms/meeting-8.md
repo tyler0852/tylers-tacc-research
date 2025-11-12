@@ -88,6 +88,24 @@
   - Much simpler than `createkey` — a read-only operation with minimal transactions and low contention.
 
 
+### Ideas for Beefing Up `writeheavy`
+- Add multiple tables and have each request write to several of them.  
+- Run each insert in its own transaction to increase lock contention.  
+- Add small random delays between writes to force overlap between concurrent requests.  
+- Include a short CPU-bound step (e.g., simple math loop) to hold threads longer.  
+- Randomize which tables each request writes to so the workload isn’t perfectly uniform.  
+
+
+### Ideas for Beefing Up `readheavy`
+- Perform multiple reads per request, pulling from different tables.  
+- Add small random delays between reads to simulate slow I/O.  
+- Randomize the size of the query (`LIMIT` values) to vary response time.  
+
+
 ## Road Blockers and Questions
 
+- Don't really have any, open to any ideas though!
+
 ## Next Steps
+
+- Beef up end points and test again
