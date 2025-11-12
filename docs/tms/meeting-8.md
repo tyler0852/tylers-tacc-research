@@ -18,15 +18,16 @@
 
 | Scenario | Users | Iterations | Fails | CPU (%) | MEM Usage | State / Behavior | Notes |
 |-----------|--------|-------------|--------|----------|-------------|------------------|
-| WH | 10 | 1,000 | 0 | — | — | Stable | Baseline sanity check. |
-| WH | 10 | 10,000 | 0 | — | — | Stable | Still negligible impact. |
-| WH | 10 | 100,000 | 0 | 100–120 | ~5 MB | Alternates between running/sleeping/stuck | Indicates periodic I/O stalls during sustained writes. |
-| WH | 1000 | 100,000 | 0 | 100–120 | ~50 MB peak | Running steadily | CPU usage plateaued as concurrency increased — consistent with DB write contention. |
-| RH | 10 | 1,000 | 0 | — | — | Stable | Baseline read. |
-| RH | 10 | 10,000 | 0 | — | — | Stable | Same negligible load. |
-| RH | 10 | 100,000 | 0 | ~800 | — | Running | Read throughput extremely high, consistent with memory-bound operation. |
-| RH | 1000 | 100,000 | 0 | ~830 | — | Running continuously | Saturation near 100 users — connection pool limit bottleneck. |
-| RH (pool = 12) | 1000 | 100,000 | 0 | ~1000 | — | Running continuously | Higher connection cap removed bottleneck — jobs completed much faster. |
+| **WH** | 10 | 1,000 | 0 | — | — | Stable | Baseline sanity check. |
+| **WH** | 10 | 10,000 | 0 | — | — | Stable | Still negligible impact. |
+| **WH** | 10 | 100,000 | 0 | 100–120 | ~5 MB | Alternates between running/sleeping/stuck | Indicates periodic I/O stalls during sustained writes. |
+| **WH** | 1000 | 100,000 | 0 | 100–120 | ~50 MB peak | Running steadily | CPU usage plateaued as concurrency increased — consistent with DB write contention. |
+| **RH** | 10 | 1,000 | 0 | — | — | Stable | Baseline read. |
+| **RH** | 10 | 10,000 | 0 | — | — | Stable | Same negligible load. |
+| **RH** | 10 | 100,000 | 0 | ~800 | — | Running | Read throughput extremely high, consistent with memory-bound operation. |
+| **RH** | 1000 | 100,000 | 0 | ~830 | — | Running continuously | Saturation near 100 users — connection pool limit bottleneck. |
+| **RH (pool = 12)** | 1000 | 100,000 | 0 | ~1000 | — | Running continuously | Higher connection cap removed bottleneck — jobs completed much faster. |
+
 
 ## Road Blockers and Questions
 
