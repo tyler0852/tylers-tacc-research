@@ -18,16 +18,20 @@
 
 | Scenario | Users | Iterations | %CPU | MEM Usage | State / Behavior | Notes |
 |:-----------|:------|:-----------|:------|:------------|:------------------|:--------|
-| writeheavy | 10 | 1,000 | — | — | Stable | Baseline sanity check. |
-| writeheavy | 10 | 10,000 | — | — | Stable | Still negligible impact. |
+| writeheavy | 10 | 1,000 | — | — | - | - |
+| writeheavy | 10 | 10,000 | — | — | - | - |
 | writeheavy | 10 | 100,000 | 100–120 | ~5 MB | Alternates between running/sleeping/stuck | Indicates periodic I/O stalls during sustained writes. |
-| writeheavy | 1000 | 100,000 | 100–120 | ~50 MB peak | Running steadily | CPU plateaued as concurrency increased — consistent with DB write contention. |
-| readheavy | 10 | 1,000 | — | — | Stable | Baseline read. |
-| readheavy | 10 | 10,000 | — | — | Stable | Same negligible load. |
-| readheavy | 10 | 100,000 | ~800 | — | Running | Extremely high throughput — memory-bound reads. |
-| readheavy | 1000 | 100,000 | ~830 | — | Running continuously | Saturation near 100 users — connection pool limit bottleneck. |
-| readheavy (pool = 12) | 1000 | 100,000 | ~1000 | — | Running continuously | Higher connection cap removed bottleneck — jobs completed much faster. |
+| writeheavy | 1000 | 100,000 | 100–120 | ~50 MB peak | Running steadily | mem steadily increased until peak |
+| readheavy | 10 | 1,000 | — | — | - | - |
+| readheavy | 10 | 10,000 | — | — | - | - |
+| readheavy | 10 | 100,000 | ~800 Peak | — | - | - |
+| readheavy | 1000 | 100,000 | ~830 Peak | — | Running continuously | Got to 100 users before other users started completing |
+| readheavy (pool = 12) | 1000 | 100,000 | ~1000 Peak | — | Running continuously | Got to around 70 users before other user started completing |
 
+- Note: For the first 8 test, the max amount of connection pools was 8, I increased it to 12 which is how many cores I have on my laptop for the last test
+- From these test, I could not reproduce the error
+- My next train of thought was to investigate how the tms_server endpoints interact with the database.
+- Are my endpoint too lightweight to repoduce the error or is SQLite not the problem???
 
 
 ## Road Blockers and Questions
