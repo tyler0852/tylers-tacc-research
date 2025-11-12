@@ -5,6 +5,8 @@ theme:
   name: readthedocs
 
 nav:
+  - Other:
+      - GitHub Repositories: other/githublinks.md
   - TMS:
       - Meeting 1: tms/meeting-1.md
       - Meeting 2: tms/meeting-2.md
