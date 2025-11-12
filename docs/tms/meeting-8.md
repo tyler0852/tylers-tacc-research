@@ -37,6 +37,56 @@
 - My next train of thought was to investigate how the tms_server endpoints interact with the database.
 - Are my endpoint too lightweight to repoduce the error or is SQLite not the problem???
 
+### CreateKey Endpoint Summary
+
+- **Purpose:** Handles SSH key creation and storage for a client.  
+- **Flow:**  
+  1. **Authorization:** Validates client credentials (`clients` table).  
+  2. **MVP Dependency Creation:** If enabled, auto-creates required records (`user_mfa`, `delegations`, `user_hosts`) with `ON CONFLICT DO NOTHING`.  
+  3. **Dependency Validation:** Ensures all dependencies are active and not expired.  
+  4. **Key Generation:** Generates the SSH key pair (CPU-only, no DB access).  
+  5. **Public Key Storage:** Inserts the new key into `pubkeys` along with metadata.  
+
+- **Database Activity:**  
+  - ~5–8 total SQL operations per request (mix of reads and inserts).  
+  - Involves up to five tables: `clients`, `user_mfa`, `delegations`, `user_hosts`, and `pubkeys`.  
+
+- **Transactions:**  
+  - Most logic uses transactions, but MVP creation performs **each insert in its own transaction**, increasing write-lock contention in SQLite.  
+
+- **Key Insight:**  
+  - The endpoint’s multiple small transactions across several tables likely contribute to the **load-related stalls** observed in `tms_server`.
+
+### GetClient Endpoint Summary
+
+- **Purpose:** Retrieves client information with authorization and tenant isolation.  
+- **Flow:**  
+  1. **Authorization:**  
+     - *ClientOwn* – Validates client credentials (`clients` table, `GET_CLIENT_SECRET`).  
+     - *TenantAdmin* – Validates admin credentials (`admin` table, `GET_ADMIN_SECRET`).  
+  2. **Client Retrieval:**  
+     - Fetches client record from `clients` using `GET_CLIENT`.  
+     - Returns details like ID, tenant, app info, and timestamps.  
+  3. **Consistency Check:**  
+     - Verifies the authorized `client_id` matches the one in the request path.  
+
+- **Database Activity:**  
+  - 2 total SQL operations per request:  
+    - 1 authorization query (`clients` or `admin`),  
+    - 1 data retrieval query (`clients`).  
+  - Involves up to two tables: `clients` and `admin`.  
+
+- **Transactions:**  
+  - Uses a standard transaction pattern (`begin → queries → commit`).  
+
+- **Security Model:**  
+  - Clients can only access their own records.  
+  - Admins can access any client within their tenant.  
+  - Tenant isolation enforced with `WHERE tenant = ?` in all queries.  
+
+- **Key Insight:**  
+  - Much simpler than `createkey` — a read-only operation with minimal transactions and low contention.
+
 
 ## Road Blockers and Questions
 
