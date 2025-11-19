@@ -22,7 +22,18 @@ called `Result::unwrap()` on an `Err` value: Database(SqliteError { code: 5, mes
 - This is a typical sqlite error under high load
 - `tms_server` never gave errors like this, would just suddenly crash
 
-## Road Blockers and Questions
+### Next Plan of Action
+
+- Start stripping things out of `tms_server`
+- Get rid of endpoints involving crypto
+- Use `tms_server` to generate data in the database
+- End goal: Minimal code base that has just `/getclient` endpoint and see if the error is reproduced
+
+### Created `tms_server_getclient_only`
+
+- A copy of `tms_server` to start stripping code out of
 
 
 ## Next Steps
+
+- Continue working on `tms_server_getclient_only`
