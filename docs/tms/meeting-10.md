@@ -7,8 +7,13 @@
 - I recreated `tms_min` to use PostgreSQL instead of SQLite
 - This significantly improved performance
 
-![diagram](images/combined_subplot.png)
-![Description](images/combined_subplot.png)
+![read latency vs users](images/read_latency_vs_users.png)
+
+![read reqs vs users](images/read_reqs_vs_users.png)
+
+![write latency vs users](images/write_latency_vs_users.png)
+
+![write reqs vs users](images/write_reqs_vs_users.png)
 
 
 
