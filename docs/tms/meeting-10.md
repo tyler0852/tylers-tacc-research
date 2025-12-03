@@ -31,5 +31,12 @@
     - We can be confident that SQL is not the problem
 - Bad news: Still in the same situation, he gives suggestions that the problem is likely Poem/Tokio/TLS software stack
 
+### Starting stripping things out of tms_server
+
+- I started taking everything out of `tms_server` so that only has the getclient functionality
+- I think I'm very close to getting this to work
+
 ## Next Steps
 
+- Get `tms_server_getclient_only` working
+- Run test to see if this still fails
