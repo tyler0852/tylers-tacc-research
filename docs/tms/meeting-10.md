@@ -7,7 +7,8 @@
 - I recreated `tms_min` to use PostgreSQL instead of SQLite
 - This significantly improved performance
 
-<img src="combined_sublplot.png" width="300">
+![diagram](combined_sublplot.png)
+
 
 ### Read Through Rich's Write Up
 
