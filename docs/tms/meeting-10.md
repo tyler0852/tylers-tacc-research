@@ -8,6 +8,7 @@
 - This significantly improved performance
 
 ![diagram](combined_sublplot.png)
+![Description](combined_sublplot.png)
 
 
 ### Read Through Rich's Write Up
