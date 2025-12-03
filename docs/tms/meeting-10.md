@@ -15,6 +15,10 @@
 
 ![write reqs vs users](images/write_reqs_vs_users.png)
 
+- In these test, SQLite would start to have fails at 25 users doing writeheavy
+
+- I also got postgres to fail in a test not shown that was massive
+    - 250 users each doing 2500 iterations of both readheavy and writeheavy
 
 
 ### Read Through Rich's Write Up
