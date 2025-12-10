@@ -18,6 +18,7 @@ nav:
       - Meeting 8: tms/meeting-8.md
       - Meeting 9: tms/meeting-9.md
       - Meeting 10: tms/meeting-10.md
+      - Meeting 11: tms/meeting-11.md
       - Load Test Results: tms/loadtest_runs.md
 
 markdown_extensions:
