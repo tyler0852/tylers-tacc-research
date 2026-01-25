@@ -21,7 +21,7 @@ nav:
       - Meeting 11: tms/meeting-11.md
       - Meeting 12: tms/meeting-12.md
       - Load Test Results: tms/loadtest_runs.md
-  - Tapis Rust SDK and CLI: tms/
+  - Tapis Rust SDK and CLI:
       - Loadtest Instructions: tapis/loadtest_instructions.md
       - Meeting 1: tapis/meeting-1.md
 
