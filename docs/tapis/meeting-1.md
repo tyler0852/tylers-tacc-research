@@ -9,6 +9,6 @@
 - I chose `Clap` because it seems like it is the most common, supported, and documented crate for CLIs
 
 - Resources:
-- https://docs.rs/clap/latest/clap/
     - [Clap crate](https://docs.rs/clap/latest/clap/)
-    - (https://docs.rs/clap/latest/clap/)
+    - <https://docs.rs/clap/latest/clap/>
+
