@@ -20,3 +20,21 @@
     - <https://rust-cli-recommendations.sunshowers.io/>
 
 ### `tms_loadtest` Testing Suite
+
+- This is almost done
+- Features of the test suite:
+    - Ability to chose to test a single endpoint or all of them
+    - Ability to test different phases of testing:
+        - Smoke: A small test to confirm everythings working
+        - Ladder: A sequence of runs gradually increasing concurrency
+            - Users scale
+            - Iterations stay constant
+        - Spike: Lots of users at once doing a small amount of requests
+            - Not sure if this is really possible because of launching time of users with Goose
+        - Soak: Long test to catch leaks at a expected amount of load
+        - If you don't specify, it will do all tests, or you can choose just one test to run
+
+## What's Next
+
+- Finish testing suite
+    - I still need to work on finalizing the testing data points I want to use and displaying the results in a nice readable way — it is in a state of working as intended right now though with all the options discussed ealier
