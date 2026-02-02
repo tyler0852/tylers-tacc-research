@@ -2,8 +2,6 @@
 
 ## What Got Done
 
-### Read First 4 Chapters of TRPL
-
 ### Created `hello_cli`
 
 - I chose `clap` (Command Line Argument Parser) because it seems like it is the most common, supported, and documented crate for CLIs
@@ -38,3 +36,4 @@
 
 - Finish testing suite
     - I still need to work on finalizing the testing data points I want to use and displaying the results in a nice readable way — it is in a state of working as intended right now though with all the options discussed ealier
+
