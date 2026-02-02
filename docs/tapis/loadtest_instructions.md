@@ -15,16 +15,10 @@ export X_TMS_CLIENT_ID=testclient1
 export X_TMS_CLIENT_SECRET=secret1
 export X_TMS_TENANT=test
 export TMS_PUBKEY_FINGERPRINT="SHA256:Y1nwRJ82LwfEwr2cxe48pB5fzqBK3DoKK4DuH584pDw"
-```
-
-## Variables for getkey
-
-```bash
-TMS_PUBKEY_FINGERPRINT
-TMS_PUBKEY_HOST
-TMS_PUBKEY_KEYTYPE
-TMS_PUBKEY_USER
-TMS_PUBKEY_USERID
+export TMS_PUBKEY_HOST="testhost1"
+export TMS_PUBKEY_KEYTYPE="ed25519"
+export TMS_PUBKEY_USER="testhostaccount1"
+export TMS_PUBKEY_USERID="1"
 ```
 
 ## Endpoints
