@@ -32,8 +32,11 @@
         - Soak: Long test to catch leaks at a expected amount of load
         - If you don't specify, it will do all tests, or you can choose just one test to run
 
+
 ## What's Next
 
 - Finish testing suite
     - I still need to work on finalizing the testing data points I want to use and displaying the results in a nice readable way — it is in a state of working as intended right now though with all the options discussed ealier
+
+- Start working on debugging `getkey` in `tms_loadtest`
 
