@@ -30,11 +30,13 @@ export TMS_PUBKEY_USERID="1"
 
 ## Running a Test
 
-- Long version: 
-    ```bash
-    ./target/release/tms_loadtest --users 10 --iterations 20000 --scenarios getclient --host $TMS_URL --report- file ~/tms-loadtest_local_getclient_perf-debug.html
-    ```
+- Long version:
+  
+```bash
+./target/release/tms_loadtest --users 10 --iterations 20000 --scenarios getclient --host $TMS_URL --report- file ~/tms-loadtest_local_getclient_perf-debug.html
+```
 - Short version
-    ```bash
-    ./target/release/tms_loadtest --users 1 --iterations 1 --scenarios get --host $TMS_URL
-    ```
+
+```bash
+./target/release/tms_loadtest --users 1 --iterations 1 --scenarios get --host $TMS_URL
+```
