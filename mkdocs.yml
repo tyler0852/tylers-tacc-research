@@ -24,6 +24,7 @@ nav:
   - Tapis Rust SDK and CLI:
       - Loadtest Instructions: tapis/loadtest_instructions.md
       - Meeting 1: tapis/meeting-1.md
+      - Meeting 2: tapis/meeting-2.md
 
 markdown_extensions:
   - admonition
