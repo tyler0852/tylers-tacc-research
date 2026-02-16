@@ -1,5 +1,29 @@
 # Instructions For Running The Loadtest  
 
+## Local Testing
+
+- In system root, clear `rm -rf .tms`
+- In tms_server or whatever branch of it modify `tms.toml`
+    - Remove tls from `http_addr` and `server_urls`
+    - `enable_mvp = true`
+    - `enable_test_tenant = true`
+- Go to root of tms_server
+
+```bash
+./target/release/tms_server --install
+cargo run --release
+```
+
+- Test server
+```bash
+curl http://localhost:3000/v1/tms/hello
+```
+
+### Running tms_loadtest
+```bash
+cargo run --release -- --host http://127.0.0.1:3000 --users 1 --iterations 1000 --scenarios createkey
+```
+
 ## VM Address
 
 ```bash
@@ -19,6 +43,11 @@ export TMS_PUBKEY_HOST="testhost1"
 export TMS_PUBKEY_KEYTYPE="ed25519"
 export TMS_PUBKEY_USER="testhostaccount1"
 export TMS_PUBKEY_USERID="1"
+```
+
+- If hitting local server
+```bash
+export TMS_URL="http://127.0.0.1:3000"
 ```
 
 ## Endpoints
