@@ -25,6 +25,7 @@ nav:
       - Loadtest Instructions: tapis/loadtest_instructions.md
       - Meeting 1: tapis/meeting-1.md
       - Meeting 2: tapis/meeting-2.md
+      - Meeting 3: tapis/meeting-3.md
 
 markdown_extensions:
   - admonition
