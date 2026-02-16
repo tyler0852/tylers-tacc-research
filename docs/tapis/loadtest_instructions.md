@@ -24,6 +24,14 @@ curl http://localhost:3000/v1/tms/hello
 cargo run --release -- --host http://127.0.0.1:3000 --users 1 --iterations 1000 --scenarios createkey
 ```
 
+### loadtesting suite locally
+```bash
+export X_TMS_TENANT=test
+export X_TMS_ADMIN_ID="~~admin"
+export X_TMS_ADMIN_SECRET="2e6ef3c29ea6d72df752ce75589b8dc9e6f68af8ad9ca25a"
+```
+- Do a create key
+
 ## VM Address
 
 ```bash
