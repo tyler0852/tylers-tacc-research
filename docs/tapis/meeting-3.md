@@ -43,6 +43,7 @@ export TMS_PUBKEY_USERID="1"
     - `tms_server` still hangs
     - Shows signs of handeling database concurrency better
     - Results may be much worse, could be due to VM vs Mac though
+    - Deadlocks at 10 users, 250 req/s, only gets around 1k total iterations
 
 ### OAuth 2.0
 
