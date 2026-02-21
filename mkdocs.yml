@@ -26,6 +26,7 @@ nav:
       - Meeting 1: tapis/meeting-1.md
       - Meeting 2: tapis/meeting-2.md
       - Meeting 3: tapis/meeting-3.md
+      - Meeting 4: tapis/meeting-4.md
 
 markdown_extensions:
   - admonition
