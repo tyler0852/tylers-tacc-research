@@ -23,6 +23,7 @@ nav:
       - Load Test Results: tms/loadtest_runs.md
   - Tapis Rust SDK and CLI:
       - Loadtest Instructions: tapis/loadtest_instructions.md
+      - Tapis CLI: tapis/tapis-cli.md
       - Meeting 1: tapis/meeting-1.md
       - Meeting 2: tapis/meeting-2.md
       - Meeting 3: tapis/meeting-3.md
