@@ -23,11 +23,17 @@ nav:
       - Load Test Results: tms/loadtest_runs.md
   - Tapis Rust SDK and CLI:
       - Loadtest Instructions: tapis/loadtest_instructions.md
-      - Tapis CLI: tapis/tapis-cli.md
       - Meeting 1: tapis/meeting-1.md
       - Meeting 2: tapis/meeting-2.md
       - Meeting 3: tapis/meeting-3.md
       - Meeting 4: tapis/meeting-4.md
+  - Tapis Rust SDK and CLI:
+      - Tapis CLI Overview: tapis/tapis-cli.md
+      - Cargo.toml: tapis/cli-cargo-toml.md
+      - main.rs: tapis/cli-main.md
+      - client.rs: tapis/cli-client.md
+      - apps.rs: tapis/cli-apps.md
+      - auth.rs: tapis/cli-auth.md
 
 markdown_extensions:
   - admonition
