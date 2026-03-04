@@ -30,6 +30,7 @@ nav:
       - Meeting 5: tapis/meeting-5.md
   - Tapis Rust SDK and CLI:
       - Tapis CLI Overview: tapis/cli-overview.md
+      - CLI Planning Doc: tapis/cli-planning.md
       - Cargo.toml: tapis/cli-cargo-toml.md
       - main.rs: tapis/cli-main.md
       - client.rs: tapis/cli-client.md
