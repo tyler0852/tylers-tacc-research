@@ -27,6 +27,7 @@ nav:
       - Meeting 2: tapis/meeting-2.md
       - Meeting 3: tapis/meeting-3.md
       - Meeting 4: tapis/meeting-4.md
+      - Meeting 5: tapis/meeting-5.md
   - Tapis Rust SDK and CLI:
       - Tapis CLI Overview: tapis/cli-overview.md
       - Cargo.toml: tapis/cli-cargo-toml.md
