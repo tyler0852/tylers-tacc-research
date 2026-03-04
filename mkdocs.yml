@@ -35,6 +35,7 @@ nav:
       - client.rs: tapis/cli-client.md
       - apps.rs: tapis/cli-apps.md
       - auth.rs: tapis/cli-auth.md
+      - Rust Concepts: tapis/rust-concepts.md
 
 markdown_extensions:
   - admonition
