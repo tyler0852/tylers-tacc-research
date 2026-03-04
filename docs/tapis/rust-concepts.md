@@ -1,93 +1,75 @@
 # Rust Concepts Used in This CLI
 
-This document briefly defines the Rust concepts used in the `tapis_cli` codebase so far
-
+Quick definitions of the Rust stuff that shows up in `tapis_cli` so far.
 
 ## Cargo + `Cargo.toml` basics
 
-Cargo is Rust’s build system and dependency manager. `Cargo.toml` declares your package metadata (name/version/edition) and the external crates (like `clap`, `reqwest`, `serde`) your project depends on, including optional **features** that enable extra functionality.
-
+Cargo is the tool that builds/runs Rust projects and manages dependencies. `Cargo.toml` is where I define the package info (name/version/edition) and list crates I depend on (like `clap`, `reqwest`, `serde`), including any feature flags I turn on.
 
 ## Dependencies + feature flags
 
-A crate’s **features** are compile-time toggles that turn on extra APIs. For example, `clap`’s `derive` feature enables `#[derive(Parser)]`, and `reqwest`’s `blocking` + `rustls-tls` features enable synchronous HTTP calls using Rustls for TLS.
-
+A crate can expose “features” which are compile-time switches for extra functionality. Example: `clap` with `derive` lets me use `#[derive(Parser)]`. `reqwest` with `blocking` + `rustls-tls` lets me do synchronous HTTP requests with Rustls handling TLS.
 
 ## Crate/module system (`mod`, `crate::`)
 
-A Rust **crate** is the compiled unit for your project. `mod client; mod apps; mod auth;` declares modules so code can be split across files, and `crate::...` refers to items starting from the crate root.
-
+A “crate” is basically the whole compiled project. `mod client; mod apps; mod auth;` splits my code into separate files/modules. `crate::...` is how I refer to things starting from the crate root (basically the top of the project).
 
 ## Imports and namespacing (`use ...`)
 
-`use` brings names (types, functions, traits) into scope so you don’t have to write full paths. For example `use clap::{Parser, Subcommand};` lets you write `Cli::parse()` and `#[derive(Subcommand)]` without prefixing with `clap::`.
-
+`use` pulls names into scope so I don’t have to write long paths. Example: `use clap::{Parser, Subcommand};` means I can write `Cli::parse()` and `#[derive(Subcommand)]` without prefixing everything with `clap::`.
 
 ## Structs (`struct`)
 
-A `struct` groups related fields into a single type. You use structs for your parsed CLI arguments (`Cli`), reusable configuration (`Client`), and JSON response shapes (`HealthcheckResponse`, `AuthHelloResponse`).
-
+A `struct` is a “bundle of fields” that forms a type. I use structs for parsed CLI args (`Cli`), shared config (`Client`), and JSON response shapes (like `HealthcheckResponse`, `AuthHelloResponse`).
 
 ## Enums (`enum`)
 
-An `enum` represents one of several variants, often used to model “either/or” choices. Your `Commands` enum represents which subcommand the user chose (`Healthcheck` vs `AuthHello`).
-
+An `enum` is “one of several options.” In my CLI, `Commands` represents which subcommand was chosen (like `Healthcheck` vs `AuthHello`).
 
 ## Derive macros (`#[derive(...)]`)
 
-A **derive macro** auto-generates Rust code for a type at compile time. For example, `#[derive(Parser)]` makes Clap able to parse arguments into `Cli`, and `#[derive(Deserialize)]` makes Serde able to build your response structs from JSON.
-
+`#[derive(...)]` auto-generates code at compile time. `#[derive(Parser)]` generates Clap parsing for my CLI structs. `#[derive(Deserialize)]` generates Serde code so my structs can be built from JSON.
 
 ## Attributes (`#[...]`)
 
-Attributes are metadata annotations that configure code generation or behavior. In your CLI, `#[arg(...)]` and `#[command(...)]` tell Clap how to interpret fields and subcommands from the command line.
+Attributes are those `#[...]` annotations that configure behavior. For Clap, stuff like `#[arg(...)]` and `#[command(...)]` tells it how to interpret flags, defaults, and subcommands.
 
+## Ownership + borrowing (`&Client`, `&self`)
 
-## Ownership + borrowing (references like `&Client`, `&self`)
-
-Rust tracks who owns each value to prevent memory bugs without a garbage collector. Passing `&Client` or using `&self` means you’re borrowing the `Client` without taking ownership, so multiple functions can use the same `Client` safely.
-
+Rust enforces ownership rules so memory stays safe without a garbage collector. When I pass `&Client` or use `&self`, I’m borrowing instead of moving ownership, so multiple functions can share the same `Client` safely.
 
 ## `impl` blocks (associated functions vs methods)
 
-An `impl` block defines functions that belong to a type. `Client::new(...)` is an **associated function** (called on the type), while `apps_healthcheck_url(&self)` is a **method** (called on an instance like `client.apps_healthcheck_url()`).
-
+An `impl` block is where I define functions for a type. `Client::new(...)` is an associated function (called on the type). `apps_healthcheck_url(&self)` is a method (called on an instance like `client.apps_healthcheck_url()`).
 
 ## Pattern matching (`match`)
 
-`match` branches on the shape/value of a type in an exhaustive way. You match on `cli.command` (a `Commands` enum) to call the correct function for each subcommand.
-
+`match` is Rust’s clean way to branch on enums/values. I `match` on `cli.command` to decide which subcommand handler to run.
 
 ## Error handling with `Result<T, E>`
 
-`Result` represents either success (`Ok(T)`) or failure (`Err(E)`). Your functions return `Result<..., Box<dyn std::error::Error>>` so callers can handle failures instead of crashing.
-
+`Result` is either `Ok(value)` or `Err(error)`. I return `Result<..., Box<dyn std::error::Error>>` so errors can be handled instead of crashing, and so I can reuse one return type for different error sources.
 
 ## The `?` operator
 
-`?` is shorthand for “if this is an error, return it immediately; otherwise unwrap the success value.” It keeps request/parse code clean when chaining fallible operations like HTTP calls and JSON parsing.
-
+`?` means: “if this is an error, return it right away; otherwise give me the success value.” It keeps HTTP + JSON parsing code from turning into a bunch of nested `match` blocks.
 
 ## Trait objects / dynamic dispatch (`Box<dyn Error>`)
 
-`Box<dyn std::error::Error>` is a heap-allocated “any error” type that can hold many different error kinds behind a common interface (`Error`). This is convenient for small CLIs because it avoids defining a custom error enum early on.
-
+`Box<dyn std::error::Error>` is a convenient “any error” container. It lets me return different error types through one interface without defining a custom error enum yet.
 
 ## Visibility (`pub`) and module boundaries
 
-Items are private to their module by default. `pub` exposes structs/functions/fields so other modules can use them (e.g., `pub struct Client` allows `apps` and `auth` modules to accept a `&Client`).
-
+Things are private to their module by default. `pub` makes them accessible from other modules. Example: `pub struct Client` lets other modules accept and use a `Client`.
 
 ## String handling (`String`, `&str`, `format!`, trimming)
 
-`String` is an owned, growable string type, while `&str` is a borrowed string slice. You use `format!` to build URLs and `trim_end_matches('/')` to normalize the base URL so you don’t end up with double slashes.
-
+`String` is an owned growable string; `&str` is a borrowed view into a string. I use `format!` to build URLs, and `trim_end_matches('/')` so the base URL is consistent and I don’t create `//` accidentally.
 
 ## HTTP requests with `reqwest` (blocking)
 
-`reqwest` is an HTTP client library for Rust. Using `reqwest::blocking::get(...)` performs a synchronous request, then you read the body with `resp.text()?` to get the response as a `String`.
-
+`reqwest` is the HTTP client crate. Using `reqwest::blocking::get(...)` makes a synchronous request, and `resp.text()?` reads the response body into a `String`.
 
 ## JSON deserialization (`serde`, `serde_json`)
 
-Serde is Rust’s framework for converting between Rust types and structured data formats. `serde_json::from_str` parses JSON text into your typed response structs, using `#[derive(Deserialize)]` and matching JSON keys to struct field names.
+Serde handles converting between Rust types and data formats. `serde_json::from_str` takes JSON text and builds my response structs, using `#[derive(Deserialize)]` and matching JSON keys to struct fields.

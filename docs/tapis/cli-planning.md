@@ -38,7 +38,15 @@ cargo run -- authenticator hello
 
 ### Encountering Multiple Methods for the Same `operationId`
 
+- We need a way to handle one `operationId` having multiple methods (GET, POST, etc.)
+- We could have the user specify every time, but could be a hassle if the endpoint doesn't need it
+- Solution: Don't require it unless it is needed, if needed and user doesn't provide, give prompt telling them to
+- Example:
+```bash
+cargo run -- <service> <METHOD> <path> 
+```
 
+### Including Parametes
 
 
 ## Error Handling
