@@ -3,6 +3,40 @@
 
 ## File Systems Layout
 
+tapis-cli/
+  Cargo.toml
+  README.md
+  docs/
+    planning.md
+    specs.md              # notes on how you ingest OpenAPI
+  src/
+    main.rs               # clap entrypoint, dispatch
+    cli.rs                # clap structs/enums (top-level parsing)
+    error.rs              # shared error type + Result alias
+    config/
+      mod.rs              # load config, select profile
+      types.rs            # Config/Profile structs
+    fs/
+      mod.rs              # paths + read/write helpers for config/auth/cache
+    client/
+      mod.rs              # Client struct, base request builder
+      request.rs          # build/send requests, error_for_status, tracing
+      response.rs         # response parsing helpers (json/text)
+    services/
+      mod.rs              # service registry + dispatch helpers
+      authenticator/
+        mod.rs            # authenticator command group
+        ops.rs            # operations (hello, device flow, etc.)
+        types.rs          # request/response structs (serde)
+      apps/
+        mod.rs
+        ops.rs
+        types.rs
+    auth/
+      mod.rs              # login, token storage, refresh logic
+      device_code.rs      # device authorization flow
+    output/
+      mod.rs              # formatting: json/raw/table later
 
 ## Prechecks
 
@@ -46,8 +80,11 @@ cargo run -- authenticator hello
 cargo run -- <service> <METHOD> <path> 
 ```
 
-### Including Parametes
+### Including Parameters
 
+- Some endpoints require parameters (path params, query params, headers, request body)
+- We need to derive them from the spec and standardize how it will be used in the CLI
+- FILL
 
 ## Error Handling
 
