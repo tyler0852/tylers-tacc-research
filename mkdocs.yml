@@ -35,6 +35,7 @@ nav:
       - Cargo.toml: tapis/cli-cargo-toml.md
       - main.rs: tapis/cli-main.md
       - client.rs: tapis/cli-client.md
+      - device_code.rs: tapis/cli-device_code.md
       - apps.rs: tapis/cli-apps.md
       - auth.rs: tapis/cli-auth.md
       - Rust Concepts: tapis/rust-concepts.md
