@@ -6,34 +6,21 @@
 tapis-cli/
 ├── Cargo.toml
 ├── README.md
+├── Config/
+│   ├── tapis-cli.toml
+│   └── Anything needed to set up env
 └── src/
     ├── main.rs
-    ├── cli.rs
-    ├── error.rs
-    ├── auth/
-    │   ├── mod.rs
-    │   └── device_code.rs
-    ├── client/
-    │   ├── mod.rs
-    │   ├── request.rs
-    │   └── response.rs
-    ├── config/
-    │   ├── mod.rs
-    │   └── types.rs
-    ├── fs/
-    │   └── mod.rs
-    ├── output/
-    │   └── mod.rs
-    └── services/
-        ├── mod.rs
-        ├── apps/
-        │   ├── mod.rs
-        │   ├── ops.rs
-        │   └── types.rs
-        └── authenticator/
-            ├── mod.rs
-            ├── ops.rs
-            └── types.rs
+    ├── device_code.rs
+    ├── client.rs
+    ├── services/
+    │   ├── apps.rs
+    │   ├── auth.rs
+    │   └── all service files
+    └── utils/
+        ├── error.rs
+        └── Any helper files
+        
 
 ## Prechecks
 
@@ -60,22 +47,33 @@ cargo run -- authenticator hello
 
 ### Defining `service` and `operationID`
 
-- To make the OpenAPI specs translate better to the CLI, we need to define some assumptions
-- We will change both `service` and `operationId` by:
-    - Making everything lowercase
-    - Using kebab-case (no-spaces-everything-seperated-by-dashes)
+- The `service` name is often long and unintuitive. I will make short hands for each one
+- Ex: The `service` "Tapis Application API" will become "apps"
+- Ex: The "Authenticator" `service` will become "auth"
 
-- While this would be the standard, I plan to make an alias so that the user could run the endpoint with `service` and `operationId` completly unchanged
+- For `operationID`, the current plan is to keep it the exact same as the OpenAPI spec but to just make it all lowercase
+- After inspecting the OpenAPI specs for different services, it looks like all operation ID's are unique
+    - Even the same endpoint with different method calls gives those different method calls a different `operationId`
+    - This means the user will never have to specify a post, get, etc.
 
-### Encountering Multiple Methods for the Same `operationId`
-
-- We need a way to handle one `operationId` having multiple methods (GET, POST, etc.)
-- We could have the user specify every time, but could be a hassle if the endpoint doesn't need it
-- Solution: Don't require it unless it is needed, if needed and user doesn't provide, give prompt telling them to
-- Example:
+- The user would be able to find clear instruction for how to use this via the cml or via a RTD 
+- cml line workflow:
 ```bash
-cargo run -- <service> <METHOD> <path> 
+tapis-cli --help
 ```
+- This outputs the different services available, something like:
+```bash
+auth
+apps
+files
+etc
+```
+- Then the user can do
+```bash
+tapis-cli auth --help
+```
+- This will define the different operation ID's the user can user
+
 
 ### Including Parameters
 
