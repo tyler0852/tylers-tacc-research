@@ -3,6 +3,7 @@
 
 ## File Systems Layout
 
+```
 tapis-cli/
 ├── Cargo.toml
 ├── README.md
@@ -20,12 +21,25 @@ tapis-cli/
     └── utils/
         ├── error.rs
         └── Any helper files
-        
+```      
 
 ## Prechecks
 
+- Validate the CLI input
+- Required env variables
+- Filesystem state
+- Things that all services will use
+- The code that will do this will be spread out through `main.rs`, `device_code.rs`, `client.rs`
+
 
 ## What Endpoints from Tapis do we Need
+
+| service | method | endpoint | operationid | small summary |
+|---|---|---|---|---|
+| Authenticator | GET | /v3/oauth2/hello | hello | Checks if auth service is up|
+| Authenticator | POST | /v3/oauth2/device/code | generate_device_code | Device Code Flow step 1: generate device_code + user_code for the CLI. |
+| Authenticator | POST | /v3/oauth2/tokens | create_token | Device Code Flow step 2: exchange device_code (+ client_id) for a Tapis JWT. |
+| Apps | GET | /v3/apps/healthcheck | healthCheck | Checks if apps service is up |
 
 
 ## How the User call each Endpoint
@@ -83,8 +97,9 @@ tapis-cli auth --help
 
 ## Error Handling
 
+- Make a HTTP call wrapper in `client.rs` that every endpoint will use
+- Will use the reqwest crate the handle errors
+- The wrapper makes a reqwest request to check the respone status
+- If status is 2xx, return the response
+- If the status is not 2xx, treat it as a failure, capture status message, return an error on the CLI
 
-## Device Code
-
-
-## Health Check Flow
