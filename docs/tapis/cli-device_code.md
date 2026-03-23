@@ -9,6 +9,12 @@
 
 ## Required Endpoints For Device Code
 
+- `/v3/oauth2/hello`
+    - `operationId`: `hello`
+    - Method: `GET`
+    - Checks if we can talk to the auth service
+    - Not part of the login flow itself, just a connectivity check
+
 - `v3/oauth2/device/code`
     - `operationId`: generate_device_code
     - Method: Post
@@ -30,21 +36,6 @@
         - `grant_type`
     - Returns a `TokenResponse` schema
     - This is the endpoint that returns the Tapis JWT and possibly a refresh token
-
-## Helpful Endpoints
-
-- `/v3/oauth2/hello`
-    - `operationId`: `hello`
-    - Method: `GET`
-    - Checks if we can talk to the auth service
-    - Not part of the login flow itself, just a connectivity check
-
-- `/v3/oauth2/.well-known/oauth-authorization-server`
-    - `operationId`: `get_server_metadata`
-    - Method: `GET`
-    - Returns OAuth server metadata
-    - Helpful for learning things like the token endpoint and supported grant types
-    - Not required to complete the basic device code flow
 
 ## Summarized OpenAPI Spec
 
@@ -93,24 +84,6 @@ paths:
                 $ref: '#/components/schemas/BasicResponse'
         '500':
           description: Server error.
-
-  /v3/oauth2/.well-known/oauth-authorization-server:
-    get:
-      tags:
-        - Metadata
-      operationId: get_server_metadata
-      description: Get the OAuth2 server metadata for the tenant.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/BasicResponse'
-                properties:
-                  result:
-                    $ref: '#/components/schemas/OAuth2Metadata'
 
   /v3/oauth2/device/code:
     post:
@@ -212,47 +185,74 @@ paths:
           type: string
           description: The url the user should go to to enter their user code
 
-    DeviceCodeResposne:
+    NewToken:
       type: object
-      required: [device_code, user_code, client_id, expires_in, verification_uri]
       properties:
-        device_code:
+        username:
           type: string
-          description: The device code generated for the client
-        user_code:
+          description: The username being authenticated (for password grant).
+        password:
           type: string
-          description: The user code generated for the client
+          description: The password assoicated with the username being authenticated (for password grant).
         client_id:
           type: string
-          description: The client_id of the client
-        expires_in:
+          description: The client_id being authenticated (for device_code grant).
+        client_key:
           type: string
-          description: The expiration for the user code
-        verification_uri:
+          description: The client_key being authenticated (optional for authorization_code grant).
+        grant_type:
           type: string
-          description: The url the user should go to to enter their user code
+          description: The OAuth2 grant type being used; either password, authorization_code or refresh_token.
+        redirect_uri:
+          type: string
+          description: The client's redirect URI (for authorization_code grant).
+        code:
+          type: string
+          description: The authorization code associated with the request (for authorization_code grant).
+        device_code:
+          type: string
+          description: The device code associated with the request (for device_code grant)
+        refresh_token:
+          type: string
+          description: The refresh token associated with the request (for refresh_token grant).
 
-    OAuth2Metadata:
+    TokenResponse:
       type: object
+      required: [access_token]
       properties:
-        issuer:
-          type: string
-          description: The authorization server's issuer identifier.
-        authorization_endpoint:
-          type: string
-          description: URL of the authorization server's authorization endpoint.
-        token_endpoint:
-          type: string
-          description: URL of the authorization server's token endpoint.
-        jwks_uri:
-          type: string
-          description: URL to the public key used to check signatures for the tokens issued by this server.
-        registration_endpoint:
-          type: string
-          description: URL of the authorization server's OAuth 2.0 Dynamic Client Registration endpoint
-        grant_types_supported:
-          type: array
-          items:
-            type: string
-          description: JSON-serializable list of grant types supported by this server.
+        access_token:
+          type: object
+          description: A Tapis access token object.
+          properties:
+            access_token:
+              type: string
+              description: The actual access token as a JWT
+            id_token:
+              type: string
+              description: The actual access token as a JWT
+            expires_at:
+              type: string
+              description: The time, as a string in UTC, when the token expires.
+            expires_in:
+              type: integer
+              description: The amount of time, in seconds, when the token will expire.
+            jti:
+              type: string
+              description: Unique identifier for the token
+        refresh_token:
+          type: object
+          description: A Tapis refresh token object.
+          properties:
+            refresh_token:
+              type: string
+              description: The actual refresh token as a JWT
+            expires_at:
+              type: string
+              description: The time, as a string in UTC, when the token expires.
+            expires_in:
+              type: integer
+              description: The amount of time, in seconds, when the token will expire.
+            jti:
+              type: string
+              description: Unique identifier for the token
 ```
