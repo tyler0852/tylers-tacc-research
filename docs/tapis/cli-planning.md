@@ -27,7 +27,8 @@ tapis-cli/
 
 - Validate the CLI input
 - Required env variables
-- Filesystem state
+- Filesystem state 
+    - Does the user need to have anything similar to that of `.tms/` which `tms_server` requires
 - Things that all services will use
 - The code that will do this will be spread out through `main.rs`, `device_code.rs`, `client.rs`
 
