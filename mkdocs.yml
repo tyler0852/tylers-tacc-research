@@ -6,7 +6,7 @@ theme:
 
 nav:
   - Other:
-      - GitHub Repositories: other/links.md
+      - Useful Links: other/links.md
   - TMS:
       - Meeting 1: tms/meeting-1.md
       - Meeting 2: tms/meeting-2.md
