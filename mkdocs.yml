@@ -6,7 +6,7 @@ theme:
 
 nav:
   - Other:
-      - GitHub Repositories: other/githublinks.md
+      - GitHub Repositories: other/links.md
   - TMS:
       - Meeting 1: tms/meeting-1.md
       - Meeting 2: tms/meeting-2.md
@@ -31,6 +31,7 @@ nav:
       - Meeting 6: tapis/meeting-6.md
       - Meeting 7: tapis/meeting-7.md
       - Meeting 8: tapis/meeting-8.md
+      - Meeting 9: tapis/meeting-9.md
   - Tapis Rust SDK and CLI:
       - Tapis CLI Overview: tapis/cli-overview.md
       - CLI Planning Doc: tapis/cli-planning.md
