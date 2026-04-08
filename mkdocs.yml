@@ -32,7 +32,9 @@ nav:
       - Meeting 7: tapis/meeting-7.md
       - Meeting 8: tapis/meeting-8.md
       - Meeting 9: tapis/meeting-9.md
+      - Meeting 10: tapis/meeting-10.md
   - Tapis Rust SDK and CLI:
+      - Tapis Endpoints: tapis/tapis-endpoints.md
       - Tapis CLI Overview: tapis/cli-overview.md
       - CLI Planning Doc: tapis/cli-planning.md
       - Cargo.toml: tapis/cli-cargo-toml.md
