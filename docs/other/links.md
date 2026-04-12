@@ -18,3 +18,9 @@
 - [Tapis RTD](https://tapis.readthedocs.io)
 
 - [Create Tapis Client](https://tacc.tapis.io/#/authenticator)
+
+## Fixing Endpoint
+
+- https://github.com/tapis-project/authenticator
+
+- [controllers.py](https://github.com/tapis-project/authenticator/blob/prod/service/controllers.py)
