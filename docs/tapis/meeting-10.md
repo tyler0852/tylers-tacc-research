@@ -10,6 +10,7 @@
 
 ```bash
 cargo run -- get-token
+```
 
 - Example work flow:
 ```bash
