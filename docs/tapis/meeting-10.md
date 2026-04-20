@@ -1,4 +1,4 @@
-# Meeting 10: April 13th, 2026
+# Meeting 10: April 20th, 2026
 
 ## What Got Done
 
@@ -55,5 +55,30 @@ refresh_token_expires_in: 31536000
 
 ### Started Looking Into This Issue
 
+- I first started by identifying the current workflow
 
+- It is using a PostgreSQL database and the SQLAlchemy Python library 
+
+#### Step 1: CLI asks for a device code
+
+- Starts at line 1165
+- Apart of `class DeviceCodeResource(Resource):`
+- Submits a post request
+- Makes sure it is a valid request
+- Looks up the client in the database
+- Builds URL used for verification URI
+- Creates device code object and saves it in the database
+- Returns a response to the user
+- After this step the database row is:
+```bash
+code = long device code
+user_code = short browser code
+status = "Created"
+username = None
+access_token_ttl = default 30 days
+```
+
+## What's Next
+- Finish working out the authenticator flow
+- See if I can make changes and test locally
 
